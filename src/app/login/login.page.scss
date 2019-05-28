@@ -1,0 +1,75 @@
+app-login {
+
+}
+
+$white-color: #fff;
+$height100: 100%;
+$bgSite: #2E363F;
+
+#bg-login {
+  width:100%;
+  height: $height100;
+}
+#bg-login::after {
+	content: '';
+  width:100%;
+  height: $height100;
+  background-image: url('../../assets/background-login.jpeg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+	opacity: 0.4;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+}
+
+ion-grid, form {
+  width:100%;
+  height: $height100;
+  z-index: 2;
+}
+
+ion-row {
+  height: $height100;
+}
+
+ion-col {
+  border: 1px solid #488aff;
+  background: $white-color;
+}
+
+ion-button {
+  font-weight: 300;
+  background-color: #5bb75b
+}
+
+.required{
+  color: #ff0000;
+}
+
+#img-login{
+  width: 50%;
+  height: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#img-login-form{
+  width: 178px;
+  height: 24px;
+  position: relative;
+  left: 50%;
+  margin-left: -89px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+@media (min-width: 240px) and (max-width: 768px) {
+  ion-col {
+      border: none;
+  }
+}

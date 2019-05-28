@@ -1,0 +1,34 @@
+ion-header{
+  margin-bottom: 30px;
+}
+#qr-holder {
+  width: 100%;
+  text-align: center;
+}
+#qr-code {
+  display: inline-block;
+}
+#title{
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+#validade-new{
+  color: #CCC;
+  font-size: 11px;
+}
+.img-logo-new{
+  width: 9%;
+  height: auto;
+  position: absolute;
+  top: -4px;
+  right: 0;
+}
+#userName{
+  font-size: 14px;
+  margin: 0px 0px 3px 0px;
+}
+#userValidade{
+  margin: 0;
+  font-size: 11px;
+  color: #CCC;
+}

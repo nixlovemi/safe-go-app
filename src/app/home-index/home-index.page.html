@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <div class="hcs">
+        <p id="userName">{{nomeUser}}</p>
+        <p id="userValidade">Validade: {{validadeUser}}</p>
+        <img class="img-logo-new" src="../../assets/logo-go.jpeg" />
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row style="margin-bottom: 30px;">
+    <ion-col size="12">
+      <div id="qr-holder">
+        <qrcode id="qr-code" [qrdata]="qrCode" [size]="300" [level]="'M'"></qrcode>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12">
+      <ion-button color="primary" size="large" type="button" expand="block">Estou chegando</ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12">
+      <ion-button color="primary" size="large" type="button" expand="block">Login Temporário</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>
