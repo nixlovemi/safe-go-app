@@ -40,38 +40,32 @@ export class LoginPage implements OnInit {
       let vSenha   = this.frmLogin.senha.trim();
 
       if(vUsuario == '' || vSenha == ''){
+
         res.dismiss();
         this.utils.showAlert('Erro!', '', 'Preencha todas as informações antes de prosseguir.', ['OK']);
+
       } else {
-        this.TbUsuarioServ.getAll()
-        .then((response) => {
+        this.TbUsuarioServ.verificaLogin(vUsuario, vSenha).then((response) => {
+
           res.dismiss();
 
-          this.storage.set('id', '1');
-          this.storage.set('login', 'nixlovemi@gmail.com');
-          this.storage.set('nome', 'Leandro Parra');
-          this.storage.set('qr-code', '1-nixlovemi@gmail.com');
-          this.storage.set('validade', '2019-12-31T23:59:00.000Z');
+          var objPai = JSON.parse(response);
+
+          this.storage.set('id', objPai.pai_id);
+          this.storage.set('login', vUsuario);
+          this.storage.set('nome', objPai.pai_nome);
+          this.storage.set('qr-code', objPai.pai_qr);
+          this.storage.set('validade', objPai.pai_validade);
+          this.storage.set('id_solicitacao', objPai.pai_id_solicitacao);
+          this.storage.set('aprovado', objPai.pai_aprovado);
 
           this.router.navigate(['/homeIndex']);
 
-          //console.log(response);
-          /*let error     = response["error"];
-          let usu_id    = response["usu_id"];
-          let usu_nome  = response["usu_nome"];
-          let usu_email = response["usu_email"];
-          let usu_ativo = response["usu_ativo"];
+        }).catch((err) => {
 
-          if(error == true || usu_ativo == false){
-            this.utils.showAlert('Erro!', '', 'Usuário ou senha inválidos!', ['OK']);
-          } else {
-            this.router.navigate(['/homeIndex/page-inicio']);
-          }*/
-        })
-        .catch((err) => {
           res.dismiss();
+          this.utils.showAlert('Erro!', '', err, ['OK']);
 
-          this.utils.showAlert('Erro!', '', 'Erro ao fazer login. Mensagem:' + err, ['OK']);
         });
       }
 

@@ -21,16 +21,25 @@ export class HomeIndexPage implements OnInit {
     private storage: Storage,
     public utils: UtilsService,
   ) {
-    this.logoUrl = '../../assets/logo-go.jpeg';
-    
-    this.storage.get('nome').then((val) => {
-      this.nomeUser = val;
-    });
-    this.storage.get('validade').then((val) => {
-      this.validadeUser = this.utils.formatDate(val, 'DD/MM/YYYY HH:MI');
-    });
-    this.storage.get('qr-code').then((val) => {
-      this.qrCode = val;
+    this.storage.get('id').then((pai_id) => {
+      if(pai_id == ''){
+        this.router.navigate(['/homeIndex']);
+      } else {
+        this.logoUrl = '../../assets/logo-go.jpeg';
+
+        this.storage.get('nome').then((val) => {
+          this.nomeUser = val;
+        });
+        this.storage.get('validade').then((val) => {
+          this.validadeUser = this.utils.formatDate(val, 'DD/MM/YYYY HH:MI');
+        });
+        this.storage.get('qr-code').then((val) => {
+          this.qrCode = val;
+        });
+      }
+    }).catch((error) => {
+      this.utils.showAlert('Erro!', '', 'Erro ao acessar aplicativo. Msg: ' + error, ['OK']);
+      this.router.navigate(['/homeIndex']);
     });
   }
 

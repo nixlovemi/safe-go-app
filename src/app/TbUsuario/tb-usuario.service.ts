@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UtilsService } from '../utils.service';
+import { AppkeyService } from '../appkey.service';
 import { Http } from '@angular/http';
 
 @Injectable({
@@ -7,46 +8,39 @@ import { Http } from '@angular/http';
 })
 export class TbUsuarioService {
   wsPath = '';
+  appKey = '';
 
-  constructor(public utils: UtilsService, public http: Http) {
+  constructor(public utils: UtilsService, public http: Http, public appkeyServ: AppkeyService) {
     this.wsPath = this.utils.getWsPath();
+    this.appKey = this.appkeyServ.getAppKey();
   }
 
-  getAll(){
+  verificaLogin(usuario, senha){
     return new Promise(
-      (resolve, reject) => {
-        let url = this.wsPath + '/db';
+    (resolve, reject) => {
+      let url      = this.utils.getWsPath() + '/Pai/verificaLogin'
+      let postData = {
+        'appkey'  : this.appKey,
+        'usuario' : usuario,
+        'senha'   : senha,
+      };
 
-        this.http.get(url)
-          .subscribe((result: any) => {
-            resolve(result.json());
-          },
-          (error) => {
-            reject(error.json());
-          });
+      this.http.post(url, postData)
+      .subscribe((result: any) => {
+        let jsonRet = result.json();
+        let msg     = jsonRet.msg;
+        let erro    = jsonRet.erro;
+        let jsonPai = jsonRet.Pai;
 
-        /*let ret = this.httpClient.get('https://swapi.co/api/films');
-        resolve(ret);*/
-
-        /*var httpOptions = {
-          headers: new HttpHeaders({
-            'cache-control' : 'no-cache',
-            'x-apikey'      : '5cec44845f86251ddebe1b1d'
-          })
-        };*/
-
-        /*var link   = this.wsPath + '/tb-usuario';
-
-        this.http.get(link)
-        .subscribe(data => {
-          let jsonRet;
-          jsonRet = JSON.parse(data["_body"]);
-
-          resolve(jsonRet);
-        }, error => {
-          reject('Erro ao pegar todos os usuários! Erro:' + error);
-        });*/
-      }
-    );
+        if(erro == true){
+          reject(msg);
+        } else {
+          resolve(jsonPai);
+        }
+      },
+      (error) => {
+        reject(error.json());
+      });
+    });
   }
 }
