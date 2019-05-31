@@ -10,8 +10,7 @@ export class UtilsService {
   constructor(
     public alertCtr: AlertController,
   ) {
-    //this.webServicePath = 'https://safegoapp-94d5.restdb.io/rest';
-    this.webServicePath = 'https://my-json-server.typicode.com/typicode/demo';
+    this.webServicePath = 'http://pessoaweb.com.br/safeGoWs';
   }
 
   getWsPath(){
@@ -19,9 +18,6 @@ export class UtilsService {
   }
 
   async showAlert(header, subHeader, message, buttons) {
-    //const alertController = document.querySelector('ion-alert-controller');
-    //await alertController.componentOnReady();
-
     const alert = await this.alertCtr.create({
       header: header,
       subHeader: subHeader,
