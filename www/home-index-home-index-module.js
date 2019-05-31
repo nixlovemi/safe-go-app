@@ -1,5 +1,74 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["home-index-home-index-module"],{
 
+/***/ "./src/app/TbPaiLocalizacao/tb-pai-localizacao.service.ts":
+/*!****************************************************************!*\
+  !*** ./src/app/TbPaiLocalizacao/tb-pai-localizacao.service.ts ***!
+  \****************************************************************/
+/*! exports provided: TbPaiLocalizacaoService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TbPaiLocalizacaoService", function() { return TbPaiLocalizacaoService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _utils_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils.service */ "./src/app/utils.service.ts");
+/* harmony import */ var _appkey_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../appkey.service */ "./src/app/appkey.service.ts");
+/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+
+
+
+
+
+var TbPaiLocalizacaoService = /** @class */ (function () {
+    function TbPaiLocalizacaoService(utils, http, appkeyServ) {
+        this.utils = utils;
+        this.http = http;
+        this.appkeyServ = appkeyServ;
+        this.wsPath = '';
+        this.appKey = '';
+        this.wsPath = this.utils.getWsPath();
+        this.appKey = this.appkeyServ.getAppKey();
+    }
+    TbPaiLocalizacaoService.prototype.gravaLocalizacao = function (pai_id, latitude, longitude) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var url = _this.utils.getWsPath() + '/PaiLocalizacao/estouChegando';
+            var postData = {
+                'appkey': _this.appKey,
+                'pai_id': pai_id,
+                'latitude': latitude,
+                'longitude': longitude,
+            };
+            _this.http.post(url, postData)
+                .subscribe(function (result) {
+                var jsonRet = result.json();
+                var msg = jsonRet.msg;
+                var erro = jsonRet.erro;
+                if (erro == true) {
+                    reject(msg);
+                }
+                else {
+                    resolve(msg);
+                }
+            }, function (error) {
+                reject(error.json());
+            });
+        });
+    };
+    TbPaiLocalizacaoService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: 'root'
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_utils_service__WEBPACK_IMPORTED_MODULE_2__["UtilsService"], _angular_http__WEBPACK_IMPORTED_MODULE_4__["Http"], _appkey_service__WEBPACK_IMPORTED_MODULE_3__["AppkeyService"]])
+    ], TbPaiLocalizacaoService);
+    return TbPaiLocalizacaoService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/home-index/home-index.module.ts":
 /*!*************************************************!*\
   !*** ./src/app/home-index/home-index.module.ts ***!
@@ -61,7 +130,7 @@ var HomeIndexPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>\n      <div class=\"hcs\">\n        <p id=\"userName\">{{nomeUser}}</p>\n        <p id=\"userValidade\">Validade: {{validadeUser}}</p>\n        <img class=\"img-logo-new\" src=\"../../assets/logo-go.jpeg\" />\n      </div>\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row style=\"margin-bottom: 30px;\">\n    <ion-col size=\"12\">\n      <div id=\"qr-holder\">\n        <qrcode id=\"qr-code\" [qrdata]=\"qrCode\" [size]=\"300\" [level]=\"'M'\"></qrcode>\n      </div>\n    </ion-col>\n  </ion-row>\n  <ion-row>\n    <ion-col size=\"12\">\n      <ion-button color=\"primary\" size=\"large\" type=\"button\" expand=\"block\">Estou chegando</ion-button>\n    </ion-col>\n  </ion-row>\n  <ion-row>\n    <ion-col size=\"12\">\n      <ion-button color=\"primary\" size=\"large\" type=\"button\" expand=\"block\">Login Temporário</ion-button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>\n      <div class=\"hcs\">\n        <p id=\"userName\">{{nomeUser}}</p>\n        <p id=\"userValidade\">Validade: {{validadeUser}}</p>\n        <img class=\"img-logo-new\" src=\"../../assets/logo-go.jpeg\" />\n      </div>\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row style=\"margin-bottom: 30px;\">\n    <ion-col size=\"12\">\n      <div id=\"qr-holder\">\n        <qrcode id=\"qr-code\" [qrdata]=\"qrCode\" [size]=\"300\" [level]=\"'M'\"></qrcode>\n      </div>\n    </ion-col>\n  </ion-row>\n  <ion-row>\n    <ion-col size=\"12\">\n      <ion-button color=\"primary\" size=\"large\" type=\"button\" expand=\"block\" (click)=\"estouChegando()\">Estou chegando</ion-button>\n    </ion-col>\n  </ion-row>\n  <ion-row>\n    <ion-col size=\"12\">\n      <ion-button color=\"primary\" size=\"large\" type=\"button\" expand=\"block\">Login Temporário</ion-button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n"
 
 /***/ }),
 
@@ -92,6 +161,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm5/ionic-storage.js");
 /* harmony import */ var _utils_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils.service */ "./src/app/utils.service.ts");
+/* harmony import */ var _ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic-native/geolocation/ngx */ "./node_modules/@ionic-native/geolocation/ngx/index.js");
+/* harmony import */ var _TbPaiLocalizacao_tb_pai_localizacao_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../TbPaiLocalizacao/tb-pai-localizacao.service */ "./src/app/TbPaiLocalizacao/tb-pai-localizacao.service.ts");
+
+
 
 
 
@@ -99,28 +172,57 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var HomeIndexPage = /** @class */ (function () {
-    function HomeIndexPage(menu, router, storage, utils) {
+    function HomeIndexPage(menu, router, storage, utils, geolocation, TbPaiLocalizacao) {
         var _this = this;
         this.menu = menu;
         this.router = router;
         this.storage = storage;
         this.utils = utils;
+        this.geolocation = geolocation;
+        this.TbPaiLocalizacao = TbPaiLocalizacao;
         this.qrCode = null;
         this.nomeUser = null;
         this.validadeUser = null;
         this.logoUrl = null;
-        this.logoUrl = '../../assets/logo-go.jpeg';
-        this.storage.get('nome').then(function (val) {
-            _this.nomeUser = val;
-        });
-        this.storage.get('validade').then(function (val) {
-            _this.validadeUser = _this.utils.formatDate(val, 'DD/MM/YYYY HH:MI');
-        });
-        this.storage.get('qr-code').then(function (val) {
-            _this.qrCode = val;
+        this.storage.get('id').then(function (pai_id) {
+            if (pai_id == '') {
+                _this.router.navigate(['/homeIndex']);
+            }
+            else {
+                _this.logoUrl = '../../assets/logo-go.jpeg';
+                _this.storage.get('nome').then(function (val) {
+                    _this.nomeUser = val;
+                });
+                _this.storage.get('validade').then(function (val) {
+                    _this.validadeUser = _this.utils.formatDate(val, 'DD/MM/YYYY HH:MI');
+                });
+                _this.storage.get('qr-code').then(function (val) {
+                    _this.qrCode = val;
+                });
+            }
+        }).catch(function (error) {
+            _this.utils.showAlert('Erro!', '', 'Erro ao acessar aplicativo. Msg: ' + error, ['OK']);
+            _this.router.navigate(['/homeIndex']);
         });
     }
     HomeIndexPage.prototype.ngOnInit = function () {
+    };
+    HomeIndexPage.prototype.estouChegando = function () {
+        var _this = this;
+        this.geolocation.getCurrentPosition().then(function (resp) {
+            _this.storage.get('id').then(function (pai_id) {
+                _this.TbPaiLocalizacao.gravaLocalizacao(pai_id, resp.coords.latitude, resp.coords.longitude).then(function (msg) {
+                    _this.utils.showAlert('Sucesso!', '', msg, ['OK']);
+                }).catch(function (error) {
+                    _this.utils.showAlert('Erro!', '', 'Erro ao enviar sua localização. Msg: ' + error, ['OK']);
+                });
+            }).catch(function (error) {
+                _this.utils.showAlert('Erro!', '', 'Erro ao buscar usuário logado. Faça o login novamente!', ['OK']);
+                _this.router.navigate(['/homeIndex']);
+            });
+        }).catch(function (error) {
+            _this.utils.showAlert('Erro!', '', 'Não conseguimos receber sua localização. Msg: ' + error, ['OK']);
+        });
     };
     HomeIndexPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -131,7 +233,9 @@ var HomeIndexPage = /** @class */ (function () {
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["MenuController"],
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
             _ionic_storage__WEBPACK_IMPORTED_MODULE_4__["Storage"],
-            _utils_service__WEBPACK_IMPORTED_MODULE_5__["UtilsService"]])
+            _utils_service__WEBPACK_IMPORTED_MODULE_5__["UtilsService"],
+            _ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_6__["Geolocation"],
+            _TbPaiLocalizacao_tb_pai_localizacao_service__WEBPACK_IMPORTED_MODULE_7__["TbPaiLocalizacaoService"]])
     ], HomeIndexPage);
     return HomeIndexPage;
 }());

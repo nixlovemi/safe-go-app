@@ -49,15 +49,15 @@ export class LoginPage implements OnInit {
 
           res.dismiss();
 
-          var objPai = JSON.parse(response);
+          let vObjPai = JSON.parse(response + '');
 
-          this.storage.set('id', objPai.pai_id);
+          this.storage.set('id', vObjPai.pai_id);
           this.storage.set('login', vUsuario);
-          this.storage.set('nome', objPai.pai_nome);
-          this.storage.set('qr-code', objPai.pai_qr);
-          this.storage.set('validade', objPai.pai_validade);
-          this.storage.set('id_solicitacao', objPai.pai_id_solicitacao);
-          this.storage.set('aprovado', objPai.pai_aprovado);
+          this.storage.set('nome', vObjPai.pai_nome);
+          this.storage.set('qr-code', vObjPai.pai_qr);
+          this.storage.set('validade', vObjPai.pai_validade);
+          this.storage.set('id_solicitacao', vObjPai.pai_id_solicitacao);
+          this.storage.set('aprovado', vObjPai.pai_aprovado);
 
           this.router.navigate(['/homeIndex']);
 

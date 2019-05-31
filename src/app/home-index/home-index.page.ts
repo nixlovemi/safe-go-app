@@ -3,6 +3,8 @@ import { MenuController } from '@ionic/angular';
 import { Router, RouterEvent } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { UtilsService } from '../utils.service';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { TbPaiLocalizacaoService } from '../TbPaiLocalizacao/tb-pai-localizacao.service';
 
 @Component({
   selector: 'app-home-index',
@@ -20,6 +22,8 @@ export class HomeIndexPage implements OnInit {
     private router: Router,
     private storage: Storage,
     public utils: UtilsService,
+    private geolocation: Geolocation,
+    public TbPaiLocalizacao: TbPaiLocalizacaoService,
   ) {
     this.storage.get('id').then((pai_id) => {
       if(pai_id == ''){
@@ -44,6 +48,29 @@ export class HomeIndexPage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  estouChegando(){
+    this.geolocation.getCurrentPosition().then((resp) => {
+      this.storage.get('id').then((pai_id) => {
+
+        this.TbPaiLocalizacao.gravaLocalizacao(pai_id, resp.coords.latitude, resp.coords.longitude).then((msg) => {
+          this.utils.showAlert('Sucesso!', '', msg, ['OK']);
+        }).catch((error) => {
+          this.utils.showAlert('Erro!', '', 'Erro ao enviar sua localização. Msg: ' + error, ['OK']);
+        });
+
+      }).catch((error) => {
+
+        this.utils.showAlert('Erro!', '', 'Erro ao buscar usuário logado. Faça o login novamente!', ['OK']);
+        this.router.navigate(['/homeIndex']);
+
+      });
+    }).catch((error) => {
+
+      this.utils.showAlert('Erro!', '', 'Não conseguimos receber sua localização. Msg: ' + error, ['OK']);
+
+    });
   }
 
 }

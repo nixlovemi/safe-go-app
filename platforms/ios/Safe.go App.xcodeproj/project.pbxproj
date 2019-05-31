@@ -41,6 +41,8 @@
 		D244078BFB624A879DA84701 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 667BAFBA8D0441BC82F5A80C /* Security.framework */; };
 		D29313745CE841189422D2EC /* SQLitePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B5514BFCFC461F9E5E1928 /* SQLitePlugin.m */; };
 		F9EFF4F265A04BBCBFD2AAA8 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4074628B8A4D30A333851C /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		1ED1854E489B4BD186D0F2C7 /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = A0621933DC2A4CF7BD92F8A9 /* CDVLocation.m */; };
+		FE9647B608E64106AA4F22D7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0DB151F489741DFBE1E1295 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,6 +144,9 @@
 		F0C6D1ADE2E7427F97C792FF /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = AFHTTPSessionManager.h; path = "cordova-plugin-advanced-http/AFHTTPSessionManager.h"; sourceTree = "<group>"; };
 		F3C8C6A638BF46E1B4B81BA2 /* CDVIonicKeyboard.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVIonicKeyboard.m; path = "cordova-plugin-ionic-keyboard/CDVIonicKeyboard.m"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = "Safe.go App/config.xml"; sourceTree = "<group>"; };
+		A0621933DC2A4CF7BD92F8A9 /* CDVLocation.m */ = {isa = PBXFileReference; name = "CDVLocation.m"; path = "cordova-plugin-geolocation/CDVLocation.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		EE572644C45A477C895A0EF3 /* CDVLocation.h */ = {isa = PBXFileReference; name = "CDVLocation.h"; path = "cordova-plugin-geolocation/CDVLocation.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		D0DB151F489741DFBE1E1295 /* CoreLocation.framework */ = {isa = PBXFileReference; name = "CoreLocation.framework"; path = "System/Library/Frameworks/CoreLocation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +158,7 @@
 				D244078BFB624A879DA84701 /* Security.framework in Frameworks */,
 				0C2E9ADB22774F6D85D2AC73 /* SystemConfiguration.framework in Frameworks */,
 				F9EFF4F265A04BBCBFD2AAA8 /* WebKit.framework in Frameworks */,
+				FE9647B608E64106AA4F22D7 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,6 +232,7 @@
 				667BAFBA8D0441BC82F5A80C /* Security.framework */,
 				AEDCAD46E3834AB88EBB4C29 /* SystemConfiguration.framework */,
 				CB4074628B8A4D30A333851C /* WebKit.framework */,
+				D0DB151F489741DFBE1E1295 /* CoreLocation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -303,6 +310,8 @@
 				8C25AFA21C7B4CBD8EEC6C8F /* IONAssetHandler.h */,
 				F3C8C6A638BF46E1B4B81BA2 /* CDVIonicKeyboard.m */,
 				318334078ED74257A6AF632C /* CDVIonicKeyboard.h */,
+				A0621933DC2A4CF7BD92F8A9 /* CDVLocation.m */,
+				EE572644C45A477C895A0EF3 /* CDVLocation.h */,
 			);
 			name = Plugins;
 			path = "Safe.go App/Plugins";
@@ -457,6 +466,7 @@
 				7E423A7F75B14B99B0BB6F93 /* CDVWKProcessPoolFactory.m in Sources */,
 				0A254C50E42F4246BC22B55A /* IONAssetHandler.m in Sources */,
 				4CC69491DE3E4D479225616A /* CDVIonicKeyboard.m in Sources */,
+				1ED1854E489B4BD186D0F2C7 /* CDVLocation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

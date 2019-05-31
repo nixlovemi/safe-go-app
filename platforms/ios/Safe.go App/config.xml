@@ -47,6 +47,9 @@
     <feature name="Keyboard">
         <param name="ios-package" onload="true" value="CDVIonicKeyboard" />
     </feature>
+    <feature name="Geolocation">
+        <param name="ios-package" value="CDVLocation" />
+    </feature>
     <name>Safe.go App</name>
     <description>Aplicativo de controle</description>
     <author email="nixlovemi@gmail.com" href="https://about.me/leandro.nix">Leandro Nix</author>
@@ -58,6 +61,9 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
+        <string>We use your location for full functionality of certain app features.</string>
+    </edit-config>
     <allow-intent href="itms:*" />
     <allow-intent href="itms-apps:*" />
     <icon height="57" src="resources/ios/icon/icon.png" width="57" />

@@ -99,6 +99,39 @@ var _sPassive,GestureController=function(){function t(t){this.doc=t,this.gesture
 
 /***/ }),
 
+/***/ "./src/app/appkey.service.ts":
+/*!***********************************!*\
+  !*** ./src/app/appkey.service.ts ***!
+  \***********************************/
+/*! exports provided: AppkeyService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppkeyService", function() { return AppkeyService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+var AppkeyService = /** @class */ (function () {
+    function AppkeyService() {
+    }
+    AppkeyService.prototype.getAppKey = function () {
+        return '7566fd6108e347f68f185ed0f4e5a401';
+    };
+    AppkeyService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: 'root'
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    ], AppkeyService);
+    return AppkeyService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/utils.service.ts":
 /*!**********************************!*\
   !*** ./src/app/utils.service.ts ***!
@@ -119,8 +152,7 @@ var UtilsService = /** @class */ (function () {
     function UtilsService(alertCtr) {
         this.alertCtr = alertCtr;
         this.webServicePath = '';
-        //this.webServicePath = 'https://safegoapp-94d5.restdb.io/rest';
-        this.webServicePath = 'https://my-json-server.typicode.com/typicode/demo';
+        this.webServicePath = 'http://pessoaweb.com.br/safeGoWs';
     }
     UtilsService.prototype.getWsPath = function () {
         return this.webServicePath;

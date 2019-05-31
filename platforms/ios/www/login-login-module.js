@@ -13,54 +13,54 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _utils_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils.service */ "./src/app/utils.service.ts");
-/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+/* harmony import */ var _appkey_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../appkey.service */ "./src/app/appkey.service.ts");
+/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+
 
 
 
 
 var TbUsuarioService = /** @class */ (function () {
-    function TbUsuarioService(utils, http) {
+    function TbUsuarioService(utils, http, appkeyServ) {
         this.utils = utils;
         this.http = http;
+        this.appkeyServ = appkeyServ;
         this.wsPath = '';
+        this.appKey = '';
         this.wsPath = this.utils.getWsPath();
+        this.appKey = this.appkeyServ.getAppKey();
     }
-    TbUsuarioService.prototype.getAll = function () {
+    TbUsuarioService.prototype.verificaLogin = function (usuario, senha) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            var url = _this.wsPath + '/db';
-            _this.http.get(url)
+            var url = _this.utils.getWsPath() + '/Pai/verificaLogin';
+            var postData = {
+                'appkey': _this.appKey,
+                'usuario': usuario,
+                'senha': senha,
+            };
+            _this.http.post(url, postData)
                 .subscribe(function (result) {
-                resolve(result.json());
+                var jsonRet = result.json();
+                var msg = jsonRet.msg;
+                var erro = jsonRet.erro;
+                var jsonPai = jsonRet.Pai;
+                if (erro == true) {
+                    reject(msg);
+                }
+                else {
+                    resolve(jsonPai);
+                }
             }, function (error) {
                 reject(error.json());
             });
-            /*let ret = this.httpClient.get('https://swapi.co/api/films');
-            resolve(ret);*/
-            /*var httpOptions = {
-              headers: new HttpHeaders({
-                'cache-control' : 'no-cache',
-                'x-apikey'      : '5cec44845f86251ddebe1b1d'
-              })
-            };*/
-            /*var link   = this.wsPath + '/tb-usuario';
-    
-            this.http.get(link)
-            .subscribe(data => {
-              let jsonRet;
-              jsonRet = JSON.parse(data["_body"]);
-    
-              resolve(jsonRet);
-            }, error => {
-              reject('Erro ao pegar todos os usuários! Erro:' + error);
-            });*/
         });
     };
     TbUsuarioService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
             providedIn: 'root'
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_utils_service__WEBPACK_IMPORTED_MODULE_2__["UtilsService"], _angular_http__WEBPACK_IMPORTED_MODULE_3__["Http"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_utils_service__WEBPACK_IMPORTED_MODULE_2__["UtilsService"], _angular_http__WEBPACK_IMPORTED_MODULE_4__["Http"], _appkey_service__WEBPACK_IMPORTED_MODULE_3__["AppkeyService"]])
     ], TbUsuarioService);
     return TbUsuarioService;
 }());
@@ -195,31 +195,20 @@ var LoginPage = /** @class */ (function () {
                 _this.utils.showAlert('Erro!', '', 'Preencha todas as informações antes de prosseguir.', ['OK']);
             }
             else {
-                _this.TbUsuarioServ.getAll()
-                    .then(function (response) {
+                _this.TbUsuarioServ.verificaLogin(vUsuario, vSenha).then(function (response) {
                     res.dismiss();
-                    _this.storage.set('id', '1');
-                    _this.storage.set('login', 'nixlovemi@gmail.com');
-                    _this.storage.set('nome', 'Leandro Parra');
-                    _this.storage.set('qr-code', '1-nixlovemi@gmail.com');
-                    _this.storage.set('validade', '2019-12-31T23:59:00.000Z');
+                    var vObjPai = JSON.parse(response + '');
+                    _this.storage.set('id', vObjPai.pai_id);
+                    _this.storage.set('login', vUsuario);
+                    _this.storage.set('nome', vObjPai.pai_nome);
+                    _this.storage.set('qr-code', vObjPai.pai_qr);
+                    _this.storage.set('validade', vObjPai.pai_validade);
+                    _this.storage.set('id_solicitacao', vObjPai.pai_id_solicitacao);
+                    _this.storage.set('aprovado', vObjPai.pai_aprovado);
                     _this.router.navigate(['/homeIndex']);
-                    //console.log(response);
-                    /*let error     = response["error"];
-                    let usu_id    = response["usu_id"];
-                    let usu_nome  = response["usu_nome"];
-                    let usu_email = response["usu_email"];
-                    let usu_ativo = response["usu_ativo"];
-          
-                    if(error == true || usu_ativo == false){
-                      this.utils.showAlert('Erro!', '', 'Usuário ou senha inválidos!', ['OK']);
-                    } else {
-                      this.router.navigate(['/homeIndex/page-inicio']);
-                    }*/
-                })
-                    .catch(function (err) {
+                }).catch(function (err) {
                     res.dismiss();
-                    _this.utils.showAlert('Erro!', '', 'Erro ao fazer login. Mensagem:' + err, ['OK']);
+                    _this.utils.showAlert('Erro!', '', err, ['OK']);
                 });
             }
             res.onDidDismiss().then(function (dis) { });
