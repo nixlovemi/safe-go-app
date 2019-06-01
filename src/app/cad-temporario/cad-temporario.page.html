@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="dark" (click)="closeModal()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Login Temporário</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row style="margin-top: 20px;">
+    <ion-col size="12">
+      <ion-item>
+        <ion-label position="stacked">Login</ion-label>
+        <ion-input name="login" [(ngModel)]="frmCadTemp.usuario"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Senha</ion-label>
+        <ion-input name="senha" [(ngModel)]="frmCadTemp.senha" type="password"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Nome</ion-label>
+        <ion-input name="nome" [(ngModel)]="frmCadTemp.nome"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Validade</ion-label>
+        <ion-datetime
+          name="validade"
+          [(ngModel)]="frmCadTemp.validade"
+          display-format="DD/MM/YYYY HH:mm"
+          picker-format="DD MMMM YYYY HH:mm"
+          month-names="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"
+          (ionCancel)="clearInput('vcto_inicial')"
+          cancelText="Limpar"
+          doneText="Selecionar"
+          min="{{currentDate}}"
+        ></ion-datetime>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-button color="primary" size="large" type="button" expand="block" (click)="postCadTemporario()">Cadastrar</ion-button>
+</ion-content>

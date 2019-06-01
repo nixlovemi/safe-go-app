@@ -27,6 +27,13 @@ export class LoginPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.storage.set('id', '');
+    this.storage.set('login', '');
+    this.storage.set('nome', '');
+    this.storage.set('qr-code', '');
+    this.storage.set('validade', '');
+    this.storage.set('id_solicitacao', '');
+    this.storage.set('aprovado', '');
   }
 
   login(){

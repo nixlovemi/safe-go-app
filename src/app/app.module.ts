@@ -14,6 +14,8 @@ import { IonicStorageModule } from '@ionic/storage';
 import { QRCodeModule } from 'angularx-qrcode';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
+import { CadTemporarioPageModule } from './cad-temporario/cad-temporario.module';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -26,6 +28,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
     BrowserAnimationsModule,
     IonicStorageModule.forRoot(),
     QRCodeModule,
+    CadTemporarioPageModule,
   ],
   providers: [
     StatusBar,

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, ModalController } from '@ionic/angular';
 import { Router, RouterEvent } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { UtilsService } from '../utils.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { TbPaiLocalizacaoService } from '../TbPaiLocalizacao/tb-pai-localizacao.service';
+import { CadTemporarioPage } from '../cad-temporario/cad-temporario.page';
 
 @Component({
   selector: 'app-home-index',
@@ -24,6 +25,7 @@ export class HomeIndexPage implements OnInit {
     public utils: UtilsService,
     private geolocation: Geolocation,
     public TbPaiLocalizacao: TbPaiLocalizacaoService,
+    public modalController: ModalController
   ) {
     this.storage.get('id').then((pai_id) => {
       if(pai_id == ''){
@@ -72,5 +74,14 @@ export class HomeIndexPage implements OnInit {
 
     });
   }
+
+  async cadTemporario(){
+    const modal = await this.modalController.create({
+      component: CadTemporarioPage,
+      componentProps: { value: 123 }
+    });
+    return await modal.present();
+  }
+
 
 }
