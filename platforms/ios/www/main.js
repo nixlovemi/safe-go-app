@@ -833,14 +833,15 @@ module.exports = webpackAsyncContext;
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
+	"./cad-temporario/cad-temporario.module": [
+		"./src/app/cad-temporario/cad-temporario.module.ts"
+	],
 	"./home-index/home-index.module": [
 		"./src/app/home-index/home-index.module.ts",
-		"common",
 		"home-index-home-index-module"
 	],
 	"./login/login.module": [
 		"./src/app/login/login.module.ts",
-		"common",
 		"login-login-module"
 	]
 };
@@ -866,6 +867,119 @@ module.exports = webpackAsyncContext;
 
 /***/ }),
 
+/***/ "./src/app/TbUsuario/tb-usuario.service.ts":
+/*!*************************************************!*\
+  !*** ./src/app/TbUsuario/tb-usuario.service.ts ***!
+  \*************************************************/
+/*! exports provided: TbUsuarioService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TbUsuarioService", function() { return TbUsuarioService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _utils_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils.service */ "./src/app/utils.service.ts");
+/* harmony import */ var _appkey_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../appkey.service */ "./src/app/appkey.service.ts");
+/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+/* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm5/ionic-storage.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+
+
+
+
+
+
+
+var TbUsuarioService = /** @class */ (function () {
+    function TbUsuarioService(utils, http, appkeyServ, storage, router) {
+        this.utils = utils;
+        this.http = http;
+        this.appkeyServ = appkeyServ;
+        this.storage = storage;
+        this.router = router;
+        this.wsPath = '';
+        this.appKey = '';
+        this.wsPath = this.utils.getWsPath();
+        this.appKey = this.appkeyServ.getAppKey();
+    }
+    TbUsuarioService.prototype.verificaLogin = function (usuario, senha) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var url = _this.utils.getWsPath() + '/Pai/verificaLogin';
+            var postData = {
+                'appkey': _this.appKey,
+                'usuario': usuario,
+                'senha': senha,
+            };
+            _this.http.post(url, postData)
+                .subscribe(function (result) {
+                var jsonRet = result.json();
+                var msg = jsonRet.msg;
+                var erro = jsonRet.erro;
+                var jsonPai = jsonRet.Pai;
+                if (erro == true) {
+                    reject(msg);
+                }
+                else {
+                    resolve(jsonPai);
+                }
+            }, function (error) {
+                reject(error.json());
+            });
+        });
+    };
+    TbUsuarioService.prototype.cadastraLoginTemp = function (usuario, senha, nome, validade) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.storage.get('id').then(function (pai_id) {
+                var url = _this.utils.getWsPath() + '/Pai/cadLoginTemporario';
+                var postData = {
+                    'appkey': _this.appKey,
+                    'login': usuario,
+                    'senha': senha,
+                    'nome': nome,
+                    'validade': validade,
+                    'id_solicitacao': pai_id,
+                };
+                _this.http.post(url, postData)
+                    .subscribe(function (result) {
+                    console.log(result);
+                    var jsonRet = result.json();
+                    var msg = jsonRet.msg;
+                    var erro = jsonRet.erro;
+                    if (erro == true) {
+                        reject(msg);
+                    }
+                    else {
+                        resolve(msg);
+                    }
+                }, function (error) {
+                    reject(error.json());
+                });
+            }).catch(function (error) {
+                _this.utils.showAlert('Erro!', '', 'Erro ao buscar usuário logado. Faça o login novamente!', ['OK']);
+                _this.router.navigate(['/homeIndex']);
+            });
+        });
+    };
+    TbUsuarioService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: 'root'
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_utils_service__WEBPACK_IMPORTED_MODULE_2__["UtilsService"],
+            _angular_http__WEBPACK_IMPORTED_MODULE_4__["Http"],
+            _appkey_service__WEBPACK_IMPORTED_MODULE_3__["AppkeyService"],
+            _ionic_storage__WEBPACK_IMPORTED_MODULE_5__["Storage"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_6__["Router"]])
+    ], TbUsuarioService);
+    return TbUsuarioService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/app-routing.module.ts":
 /*!***************************************!*\
   !*** ./src/app/app-routing.module.ts ***!
@@ -886,6 +1000,7 @@ var routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', loadChildren: './login/login.module#LoginPageModule' },
     { path: 'homeIndex', loadChildren: './home-index/home-index.module#HomeIndexPageModule' },
+    { path: 'cadTemporario', loadChildren: './cad-temporario/cad-temporario.module#CadTemporarioPageModule' },
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -990,6 +1105,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm5/ionic-storage.js");
 /* harmony import */ var angularx_qrcode__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! angularx-qrcode */ "./node_modules/angularx-qrcode/dist/index.js");
 /* harmony import */ var _ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ionic-native/geolocation/ngx */ "./node_modules/@ionic-native/geolocation/ngx/index.js");
+/* harmony import */ var _cad_temporario_cad_temporario_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./cad-temporario/cad-temporario.module */ "./src/app/cad-temporario/cad-temporario.module.ts");
+
 
 
 
@@ -1020,6 +1137,7 @@ var AppModule = /** @class */ (function () {
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_10__["BrowserAnimationsModule"],
                 _ionic_storage__WEBPACK_IMPORTED_MODULE_11__["IonicStorageModule"].forRoot(),
                 angularx_qrcode__WEBPACK_IMPORTED_MODULE_12__["QRCodeModule"],
+                _cad_temporario_cad_temporario_module__WEBPACK_IMPORTED_MODULE_14__["CadTemporarioPageModule"],
             ],
             providers: [
                 _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_6__["StatusBar"],
@@ -1031,6 +1149,260 @@ var AppModule = /** @class */ (function () {
         })
     ], AppModule);
     return AppModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/appkey.service.ts":
+/*!***********************************!*\
+  !*** ./src/app/appkey.service.ts ***!
+  \***********************************/
+/*! exports provided: AppkeyService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppkeyService", function() { return AppkeyService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+var AppkeyService = /** @class */ (function () {
+    function AppkeyService() {
+    }
+    AppkeyService.prototype.getAppKey = function () {
+        return '7566fd6108e347f68f185ed0f4e5a401';
+    };
+    AppkeyService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: 'root'
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    ], AppkeyService);
+    return AppkeyService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/cad-temporario/cad-temporario.module.ts":
+/*!*********************************************************!*\
+  !*** ./src/app/cad-temporario/cad-temporario.module.ts ***!
+  \*********************************************************/
+/*! exports provided: CadTemporarioPageModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CadTemporarioPageModule", function() { return CadTemporarioPageModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _cad_temporario_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./cad-temporario.page */ "./src/app/cad-temporario/cad-temporario.page.ts");
+
+
+
+
+
+
+
+var routes = [
+    {
+        path: '',
+        component: _cad_temporario_page__WEBPACK_IMPORTED_MODULE_6__["CadTemporarioPage"]
+    }
+];
+var CadTemporarioPageModule = /** @class */ (function () {
+    function CadTemporarioPageModule() {
+    }
+    CadTemporarioPageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
+                _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["IonicModule"],
+                _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"].forChild(routes)
+            ],
+            declarations: [_cad_temporario_page__WEBPACK_IMPORTED_MODULE_6__["CadTemporarioPage"]]
+        })
+    ], CadTemporarioPageModule);
+    return CadTemporarioPageModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/cad-temporario/cad-temporario.page.html":
+/*!*********************************************************!*\
+  !*** ./src/app/cad-temporario/cad-temporario.page.html ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button color=\"dark\" (click)=\"closeModal()\">\n        <ion-icon name=\"arrow-back\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-title>Login Temporário</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row style=\"margin-top: 20px;\">\n    <ion-col size=\"12\">\n      <ion-item>\n        <ion-label position=\"stacked\">Login</ion-label>\n        <ion-input name=\"login\" [(ngModel)]=\"frmCadTemp.usuario\"></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <ion-label position=\"stacked\">Senha</ion-label>\n        <ion-input name=\"senha\" [(ngModel)]=\"frmCadTemp.senha\" type=\"password\"></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <ion-label position=\"stacked\">Nome</ion-label>\n        <ion-input name=\"nome\" [(ngModel)]=\"frmCadTemp.nome\"></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <ion-label position=\"stacked\">Validade</ion-label>\n        <ion-datetime\n          name=\"validade\"\n          [(ngModel)]=\"frmCadTemp.validade\"\n          display-format=\"DD/MM/YYYY HH:mm\"\n          picker-format=\"DD MMMM YYYY HH:mm\"\n          month-names=\"Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro\"\n          (ionCancel)=\"clearInput('vcto_inicial')\"\n          cancelText=\"Limpar\"\n          doneText=\"Selecionar\"\n          min=\"{{currentDate}}\"\n        ></ion-datetime>\n      </ion-item>\n    </ion-col>\n  </ion-row>\n\n  <ion-button color=\"primary\" size=\"large\" type=\"button\" expand=\"block\" (click)=\"postCadTemporario()\">Cadastrar</ion-button>\n</ion-content>\n"
+
+/***/ }),
+
+/***/ "./src/app/cad-temporario/cad-temporario.page.scss":
+/*!*********************************************************!*\
+  !*** ./src/app/cad-temporario/cad-temporario.page.scss ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NhZC10ZW1wb3JhcmlvL2NhZC10ZW1wb3JhcmlvLnBhZ2Uuc2NzcyJ9 */"
+
+/***/ }),
+
+/***/ "./src/app/cad-temporario/cad-temporario.page.ts":
+/*!*******************************************************!*\
+  !*** ./src/app/cad-temporario/cad-temporario.page.ts ***!
+  \*******************************************************/
+/*! exports provided: CadTemporarioPage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CadTemporarioPage", function() { return CadTemporarioPage; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _utils_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils.service */ "./src/app/utils.service.ts");
+/* harmony import */ var _TbUsuario_tb_usuario_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../TbUsuario/tb-usuario.service */ "./src/app/TbUsuario/tb-usuario.service.ts");
+
+
+
+
+
+var CadTemporarioPage = /** @class */ (function () {
+    function CadTemporarioPage(modalController, utils, TbUsuarioServ) {
+        this.modalController = modalController;
+        this.utils = utils;
+        this.TbUsuarioServ = TbUsuarioServ;
+        this.currentDate = '';
+        this.frmCadTemp = {
+            usuario: '',
+            senha: '',
+            nome: '',
+            validade: ''
+        };
+        var today = new Date().toISOString();
+        this.currentDate = this.utils.formatDate(today, 'YYYY-MM-DD');
+    }
+    CadTemporarioPage.prototype.ngOnInit = function () {
+    };
+    CadTemporarioPage.prototype.closeModal = function () {
+        this.modalController.dismiss();
+    };
+    CadTemporarioPage.prototype.postCadTemporario = function () {
+        var _this = this;
+        this.TbUsuarioServ.cadastraLoginTemp(this.frmCadTemp.usuario, this.frmCadTemp.senha, this.frmCadTemp.nome, this.utils.formatDate(this.frmCadTemp.validade, 'YYYY-MM-DD HH:MI')).then(function (msg) {
+            _this.utils.showAlert('Sucesso!', '', msg, ['OK']);
+            _this.closeModal();
+        }).catch(function (error) {
+            _this.utils.showAlert('Erro!', '', 'Erro ao cadastrar login temporário. Msg: ' + error, ['OK']);
+        });
+    };
+    CadTemporarioPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-cad-temporario',
+            template: __webpack_require__(/*! ./cad-temporario.page.html */ "./src/app/cad-temporario/cad-temporario.page.html"),
+            styles: [__webpack_require__(/*! ./cad-temporario.page.scss */ "./src/app/cad-temporario/cad-temporario.page.scss")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ModalController"],
+            _utils_service__WEBPACK_IMPORTED_MODULE_3__["UtilsService"],
+            _TbUsuario_tb_usuario_service__WEBPACK_IMPORTED_MODULE_4__["TbUsuarioService"]])
+    ], CadTemporarioPage);
+    return CadTemporarioPage;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/utils.service.ts":
+/*!**********************************!*\
+  !*** ./src/app/utils.service.ts ***!
+  \**********************************/
+/*! exports provided: UtilsService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UtilsService", function() { return UtilsService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+
+
+
+var UtilsService = /** @class */ (function () {
+    function UtilsService(alertCtr) {
+        this.alertCtr = alertCtr;
+        this.webServicePath = '';
+        this.webServicePath = 'http://pessoaweb.com.br/safeGoWs';
+    }
+    UtilsService.prototype.getWsPath = function () {
+        return this.webServicePath;
+    };
+    UtilsService.prototype.showAlert = function (header, subHeader, message, buttons) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var alert;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.alertCtr.create({
+                            header: header,
+                            subHeader: subHeader,
+                            message: message,
+                            buttons: buttons,
+                        })];
+                    case 1:
+                        alert = _a.sent();
+                        return [4 /*yield*/, alert.present()];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    UtilsService.prototype.getDateString = function () {
+        var arrInfo = {
+            monthNames: 'Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro',
+            monthShortNames: 'Jan, Fev, Mar, Abr, Mai, Jun, Jul, Ago, Set, Out, Nov, Dez',
+            dayNames: 'Domingo, Segunda-Feira, Terça-Feira, Quarta-Feira, Quinta-Feira, Sexta-Feira, Sábado',
+            dayShortNames: 'Dom, Seg, Ter, Qua, Qui, Sex, Sáb'
+        };
+        return arrInfo;
+    };
+    /*
+    date: tem que ser no formato ISO String (new Date().toISOString())
+    2011-10-05T14:48:00.000Z
+    */
+    UtilsService.prototype.formatDate = function (date, format) {
+        if (format === void 0) { format = 'YYYY-MM-DD'; }
+        var strDate = '' + date.replace('Z', '');
+        var ano = strDate.substr(0, 4);
+        var mes = strDate.substr(5, 2);
+        var dia = strDate.substr(8, 2);
+        var hora = strDate.substr(11, 2);
+        var minuto = strDate.substr(14, 2);
+        var segundo = strDate.substr(17, 2);
+        var strDateFmt = format.replace('YYYY', ano).replace('MM', mes).replace('DD', dia).replace('HH', hora).replace('MI', minuto).replace('SS', segundo);
+        return strDateFmt;
+    };
+    UtilsService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: 'root'
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["AlertController"]])
+    ], UtilsService);
+    return UtilsService;
 }());
 
 
@@ -1098,7 +1470,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/leandro/NetBeansProjects/safe-go-app/safe-go-app/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /Users/leandronix/NetBeansProjects/safe-go-app/safe-go-app/src/main.ts */"./src/main.ts");
 
 
 /***/ })
