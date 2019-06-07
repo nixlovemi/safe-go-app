@@ -15,7 +15,7 @@ export class TbPaiLocalizacaoService {
     this.appKey = this.appkeyServ.getAppKey();
   }
 
-  gravaLocalizacao(pai_id, latitude, longitude){
+  gravaLocalizacao(pai_id, latitude, longitude, problema){
     return new Promise(
     (resolve, reject) => {
       let url      = this.utils.getWsPath() + '/PaiLocalizacao/estouChegando'
@@ -24,6 +24,7 @@ export class TbPaiLocalizacaoService {
         'pai_id'    : pai_id,
         'latitude'  : latitude,
         'longitude' : longitude,
+        'problema'  : problema,
       };
 
       this.http.post(url, postData)

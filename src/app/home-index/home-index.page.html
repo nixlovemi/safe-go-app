@@ -20,11 +20,8 @@
   </ion-row>
   <ion-row>
     <ion-col size="12">
-      <ion-button color="primary" size="large" type="button" expand="block" (click)="estouChegando()">Estou chegando</ion-button>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size="12">
+      <ion-button color="primary" size="large" type="button" expand="block" (click)="estouChegando(false)">Estou chegando</ion-button>
+      <ion-button color="danger" size="large" type="button" expand="block" (click)="estouChegando(true)">Estou com problema</ion-button>
       <ion-button *ngIf="isTemporario == false" color="primary" size="large" type="button" expand="block" (click)="cadTemporario()">Login Temporário</ion-button>
     </ion-col>
   </ion-row>

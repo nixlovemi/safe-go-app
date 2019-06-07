@@ -56,11 +56,11 @@ export class HomeIndexPage implements OnInit {
   ngOnInit() {
   }
 
-  estouChegando(){
+  estouChegando(problema=false){
     this.geolocation.getCurrentPosition().then((resp) => {
       this.storage.get('id').then((pai_id) => {
 
-        this.TbPaiLocalizacao.gravaLocalizacao(pai_id, resp.coords.latitude, resp.coords.longitude).then((msg) => {
+        this.TbPaiLocalizacao.gravaLocalizacao(pai_id, resp.coords.latitude, resp.coords.longitude, problema).then((msg) => {
           this.utils.showAlert('Sucesso!', '', msg, ['OK']);
         }).catch((error) => {
           this.utils.showAlert('Erro!', '', 'Erro ao enviar sua localização. Msg: ' + error, ['OK']);
