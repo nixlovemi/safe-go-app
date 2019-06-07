@@ -17,6 +17,7 @@ export class HomeIndexPage implements OnInit {
   public nomeUser: string = null;
   public validadeUser: string = null;
   public logoUrl: string = null;
+  public isTemporario: true;
 
   constructor(
     private menu: MenuController,
@@ -41,6 +42,9 @@ export class HomeIndexPage implements OnInit {
         });
         this.storage.get('qr-code').then((val) => {
           this.qrCode = val;
+        });
+        this.storage.get('isTemporario').then((val) => {
+          this.isTemporario = val;
         });
       }
     }).catch((error) => {

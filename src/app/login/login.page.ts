@@ -34,6 +34,7 @@ export class LoginPage implements OnInit {
     this.storage.set('validade', '');
     this.storage.set('id_solicitacao', '');
     this.storage.set('aprovado', '');
+    this.storage.set('isTemporario', true);
   }
 
   login(){
@@ -65,6 +66,7 @@ export class LoginPage implements OnInit {
           this.storage.set('validade', vObjPai.pai_validade);
           this.storage.set('id_solicitacao', vObjPai.pai_id_solicitacao);
           this.storage.set('aprovado', vObjPai.pai_aprovado);
+          this.storage.set('isTemporario', vObjPai.pai_id_solicitacao > 0);
 
           this.router.navigate(['/homeIndex']);
 
