@@ -11,6 +11,7 @@ import * as moment from 'moment';
 })
 export class CadTemporarioPage implements OnInit {
   currentDate = '';
+  maxDate     = '';
   frmCadTemp = {
     usuario: '',
     senha: '',
@@ -23,12 +24,13 @@ export class CadTemporarioPage implements OnInit {
     public utils: UtilsService,
     public TbUsuarioServ: TbUsuarioService,
   ) {
-    let today = moment().toISOString();
+    let momentToday  = moment();
+    let today        = momentToday.toISOString();
     this.currentDate = this.utils.formatDate(today, 'YYYY-MM-DD');
+    this.maxDate     = momentToday.add(1, 'M').toISOString();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   closeModal() {
     this.modalController.dismiss();
