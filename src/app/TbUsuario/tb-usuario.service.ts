@@ -92,4 +92,33 @@ export class TbUsuarioService {
 
     });
   }
+
+  solicitaSenha(usuario){
+    return new Promise(
+    (resolve, reject) => {
+
+      let url      = this.utils.getWsPath() + '/Pai/solicitaResetSenha'
+      let postData = {
+        'appkey'         : this.appKey,
+        'login'          : usuario,
+      };
+
+      this.http.post(url, postData)
+      .subscribe((result: any) => {
+        let jsonRet = result.json();
+        let msg     = jsonRet.msg;
+        let erro    = jsonRet.erro;
+
+        if(erro == true){
+          reject(msg);
+        } else {
+          resolve(msg);
+        }
+      },
+      (error) => {
+        reject(error.json());
+      });
+
+    });
+  }
 }
