@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { UtilsService } from '../utils.service';
 import { TbUsuarioService } from '../TbUsuario/tb-usuario.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-cad-temporario',
@@ -22,7 +23,7 @@ export class CadTemporarioPage implements OnInit {
     public utils: UtilsService,
     public TbUsuarioServ: TbUsuarioService,
   ) {
-    let today = new Date().toISOString();
+    let today = moment().toISOString();
     this.currentDate = this.utils.formatDate(today, 'YYYY-MM-DD');
   }
 

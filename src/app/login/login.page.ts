@@ -4,6 +4,7 @@ import { Router } from  "@angular/router";
 import { UtilsService } from '../utils.service';
 import { TbUsuarioService } from '../TbUsuario/tb-usuario.service';
 import { Storage } from '@ionic/storage';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,9 @@ export class LoginPage implements OnInit {
     private router: Router,
     public TbUsuarioServ: TbUsuarioService,
     private storage: Storage
-  ) { }
+  ) {
+    moment.locale('pt-BR');
+  }
 
   ngOnInit() {
     this.storage.set('id', '');
@@ -58,6 +61,15 @@ export class LoginPage implements OnInit {
           res.dismiss();
 
           let vObjPai = JSON.parse(response + '');
+
+          let vValidade    = moment(vObjPai.pai_validade);
+          let vHoje        = moment();
+          let vDifValidade = vValidade.diff(vHoje, 'minutes');
+          if(vDifValidade < 0){
+            res.dismiss();
+            this.utils.showAlert('Alerta!', '', 'Seu login era válido até ' + vValidade.format('DD/MM/YYYY HH:mm') + '. Entre em contato com a escola.', ['OK']);
+            return;
+          }
 
           this.storage.set('id', vObjPai.pai_id);
           this.storage.set('login', vUsuario);
