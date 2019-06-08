@@ -14,12 +14,12 @@ $bgSite: #2E363F;
 	content: '';
   width:100%;
   height: $height100;
-  background-image: url('../../assets/background-login.jpeg');
+  background-image: url('../../assets/background-escuro.jpg');
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
   background-size: cover;
-	opacity: 0.4;
+	opacity: 0.9;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -37,13 +37,12 @@ ion-row {
 }
 
 ion-col {
-  border: 1px solid #488aff;
-  background: $white-color;
+  /*border: 1px solid #488aff;*/
+  /*background: $white-color;*/
 }
 
 ion-button {
   font-weight: 300;
-  background-color: #5bb75b
 }
 
 .required{
@@ -68,8 +67,19 @@ ion-button {
   padding-bottom: 10px;
 }
 
-@media (min-width: 240px) and (max-width: 768px) {
-  ion-col {
-      border: none;
-  }
+ion-input{
+  color: #FFF;
+}
+ion-item{
+  --background: transparent;
+  --background-activated: rgba(0, 0, 0, .3);
+  --background-focused: rgba(0, 0, 0, .3);
+}
+.esqueci-senha{
+  font-size: 12px;
+  position: relative;
+  top: 8px;
+}
+.esqueci-senha a{
+  color: #FFF;
 }

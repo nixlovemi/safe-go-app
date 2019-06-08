@@ -5,7 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { HomeIndexPage } from './home-index.page';
 import { QRCodeModule } from 'angularx-qrcode';
-
 const routes: Routes = [
   {
     path: '',

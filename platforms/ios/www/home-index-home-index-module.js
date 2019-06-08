@@ -30,7 +30,7 @@ var TbPaiLocalizacaoService = /** @class */ (function () {
         this.wsPath = this.utils.getWsPath();
         this.appKey = this.appkeyServ.getAppKey();
     }
-    TbPaiLocalizacaoService.prototype.gravaLocalizacao = function (pai_id, latitude, longitude) {
+    TbPaiLocalizacaoService.prototype.gravaLocalizacao = function (pai_id, latitude, longitude, problema) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             var url = _this.utils.getWsPath() + '/PaiLocalizacao/estouChegando';
@@ -39,6 +39,7 @@ var TbPaiLocalizacaoService = /** @class */ (function () {
                 'pai_id': pai_id,
                 'latitude': latitude,
                 'longitude': longitude,
+                'problema': problema,
             };
             _this.http.post(url, postData)
                 .subscribe(function (result) {
@@ -130,7 +131,7 @@ var HomeIndexPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>\n      <div class=\"hcs\">\n        <p id=\"userName\">{{nomeUser}}</p>\n        <p id=\"userValidade\">Validade: {{validadeUser}}</p>\n        <img class=\"img-logo-new\" src=\"../../assets/logo-go.jpeg\" />\n      </div>\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row style=\"margin-bottom: 30px;\">\n    <ion-col size=\"12\">\n      <div id=\"qr-holder\">\n        <qrcode id=\"qr-code\" [qrdata]=\"qrCode\" [size]=\"300\" [level]=\"'M'\"></qrcode>\n      </div>\n    </ion-col>\n  </ion-row>\n  <ion-row>\n    <ion-col size=\"12\">\n      <ion-button color=\"primary\" size=\"large\" type=\"button\" expand=\"block\" (click)=\"estouChegando()\">Estou chegando</ion-button>\n    </ion-col>\n  </ion-row>\n  <ion-row>\n    <ion-col size=\"12\">\n      <ion-button color=\"primary\" size=\"large\" type=\"button\" expand=\"block\" (click)=\"cadTemporario()\">Login Temporário</ion-button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-thumbnail slot=\"end\">\n      <img class=\"img-logo-new\" src=\"../../assets/avatar.png\">\n    </ion-thumbnail>\n    <ion-label class=\"sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated user-validade\">\n      <h3 id=\"title\">{{nomeUser}}</h3>\n      <p>Validade: {{validadeUser}}</p>\n    </ion-label>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row style=\"margin-bottom: 30px;\">\n    <ion-col size=\"12\">\n      <div id=\"qr-holder\">\n        <qrcode id=\"qr-code\" [qrdata]=\"qrCode\" [size]=\"300\" [level]=\"'M'\"></qrcode>\n      </div>\n    </ion-col>\n  </ion-row>\n  <ion-row>\n    <ion-col size=\"12\">\n      <ion-button color=\"primary\" size=\"large\" type=\"button\" expand=\"block\" (click)=\"estouChegando(false)\">Estou chegando</ion-button>\n      <ion-button color=\"danger\" size=\"large\" type=\"button\" expand=\"block\" (click)=\"estouChegando(true)\">Estou com problema</ion-button>\n      <ion-button *ngIf=\"isTemporario == false\" color=\"primary\" size=\"large\" type=\"button\" expand=\"block\" (click)=\"cadTemporario()\">Login Temporário</ion-button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n"
 
 /***/ }),
 
@@ -141,7 +142,7 @@ module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>\n      <div cla
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "ion-header {\n  margin-bottom: 30px; }\n\n#qr-holder {\n  width: 100%;\n  text-align: center; }\n\n#qr-code {\n  display: inline-block; }\n\n#title {\n  margin-top: 5px;\n  margin-bottom: 0; }\n\n#validade-new {\n  color: #CCC;\n  font-size: 11px; }\n\n.img-logo-new {\n  width: 9%;\n  height: auto;\n  position: absolute;\n  top: -4px;\n  right: 0; }\n\n#userName {\n  font-size: 14px;\n  margin: 0px 0px 3px 0px; }\n\n#userValidade {\n  margin: 0;\n  font-size: 11px;\n  color: #CCC; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9sZWFuZHJvbml4L05ldEJlYW5zUHJvamVjdHMvc2FmZS1nby1hcHAvc2FmZS1nby1hcHAvc3JjL2FwcC9ob21lLWluZGV4L2hvbWUtaW5kZXgucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsbUJBQW1CLEVBQUE7O0FBRXJCO0VBQ0UsV0FBVztFQUNYLGtCQUFrQixFQUFBOztBQUVwQjtFQUNFLHFCQUFxQixFQUFBOztBQUV2QjtFQUNFLGVBQWU7RUFDZixnQkFBZ0IsRUFBQTs7QUFFbEI7RUFDRSxXQUFXO0VBQ1gsZUFBZSxFQUFBOztBQUVqQjtFQUNFLFNBQVM7RUFDVCxZQUFZO0VBQ1osa0JBQWtCO0VBQ2xCLFNBQVM7RUFDVCxRQUFRLEVBQUE7O0FBRVY7RUFDRSxlQUFlO0VBQ2YsdUJBQXVCLEVBQUE7O0FBRXpCO0VBQ0UsU0FBUztFQUNULGVBQWU7RUFDZixXQUFXLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9ob21lLWluZGV4L2hvbWUtaW5kZXgucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW9uLWhlYWRlcntcbiAgbWFyZ2luLWJvdHRvbTogMzBweDtcbn1cbiNxci1ob2xkZXIge1xuICB3aWR0aDogMTAwJTtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuI3FyLWNvZGUge1xuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG59XG4jdGl0bGV7XG4gIG1hcmdpbi10b3A6IDVweDtcbiAgbWFyZ2luLWJvdHRvbTogMDtcbn1cbiN2YWxpZGFkZS1uZXd7XG4gIGNvbG9yOiAjQ0NDO1xuICBmb250LXNpemU6IDExcHg7XG59XG4uaW1nLWxvZ28tbmV3e1xuICB3aWR0aDogOSU7XG4gIGhlaWdodDogYXV0bztcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB0b3A6IC00cHg7XG4gIHJpZ2h0OiAwO1xufVxuI3VzZXJOYW1le1xuICBmb250LXNpemU6IDE0cHg7XG4gIG1hcmdpbjogMHB4IDBweCAzcHggMHB4O1xufVxuI3VzZXJWYWxpZGFkZXtcbiAgbWFyZ2luOiAwO1xuICBmb250LXNpemU6IDExcHg7XG4gIGNvbG9yOiAjQ0NDO1xufVxuIl19 */"
+module.exports = "ion-header {\n  margin-bottom: 30px; }\n\n#qr-holder {\n  width: 100%;\n  text-align: center; }\n\n#qr-code {\n  display: inline-block; }\n\n#title {\n  font-size: 16px; }\n\n#validade-new {\n  color: #CCC;\n  font-size: 11px; }\n\n.img-logo-new {\n  position: relative;\n  left: -8px; }\n\n.user-validade {\n  position: relative;\n  left: 8px; }\n\n#userName {\n  font-size: 14px;\n  margin: 0px 0px 3px 0px; }\n\n#userValidade {\n  margin: 0;\n  font-size: 11px;\n  color: #CCC; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9sZWFuZHJvbml4L05ldEJlYW5zUHJvamVjdHMvc2FmZS1nby1hcHAvc2FmZS1nby1hcHAvc3JjL2FwcC9ob21lLWluZGV4L2hvbWUtaW5kZXgucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsbUJBQW1CLEVBQUE7O0FBRXJCO0VBQ0UsV0FBVztFQUNYLGtCQUFrQixFQUFBOztBQUVwQjtFQUNFLHFCQUFxQixFQUFBOztBQUV2QjtFQUNFLGVBQWUsRUFBQTs7QUFFakI7RUFDRSxXQUFXO0VBQ1gsZUFBZSxFQUFBOztBQUVqQjtFQUNFLGtCQUFrQjtFQUNsQixVQUFVLEVBQUE7O0FBRVo7RUFDRSxrQkFBa0I7RUFDbEIsU0FBUyxFQUFBOztBQUVYO0VBQ0UsZUFBZTtFQUNmLHVCQUF1QixFQUFBOztBQUV6QjtFQUNFLFNBQVM7RUFDVCxlQUFlO0VBQ2YsV0FBVyxFQUFBIiwiZmlsZSI6InNyYy9hcHAvaG9tZS1pbmRleC9ob21lLWluZGV4LnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbImlvbi1oZWFkZXJ7XG4gIG1hcmdpbi1ib3R0b206IDMwcHg7XG59XG4jcXItaG9sZGVyIHtcbiAgd2lkdGg6IDEwMCU7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbn1cbiNxci1jb2RlIHtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xufVxuI3RpdGxle1xuICBmb250LXNpemU6IDE2cHg7XG59XG4jdmFsaWRhZGUtbmV3e1xuICBjb2xvcjogI0NDQztcbiAgZm9udC1zaXplOiAxMXB4O1xufVxuLmltZy1sb2dvLW5ld3tcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICBsZWZ0OiAtOHB4O1xufVxuLnVzZXItdmFsaWRhZGV7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgbGVmdDogOHB4O1xufVxuI3VzZXJOYW1le1xuICBmb250LXNpemU6IDE0cHg7XG4gIG1hcmdpbjogMHB4IDBweCAzcHggMHB4O1xufVxuI3VzZXJWYWxpZGFkZXtcbiAgbWFyZ2luOiAwO1xuICBmb250LXNpemU6IDExcHg7XG4gIGNvbG9yOiAjQ0NDO1xufVxuIl19 */"
 
 /***/ }),
 
@@ -202,6 +203,9 @@ var HomeIndexPage = /** @class */ (function () {
                 _this.storage.get('qr-code').then(function (val) {
                     _this.qrCode = val;
                 });
+                _this.storage.get('isTemporario').then(function (val) {
+                    _this.isTemporario = val;
+                });
             }
         }).catch(function (error) {
             _this.utils.showAlert('Erro!', '', 'Erro ao acessar aplicativo. Msg: ' + error, ['OK']);
@@ -210,11 +214,12 @@ var HomeIndexPage = /** @class */ (function () {
     }
     HomeIndexPage.prototype.ngOnInit = function () {
     };
-    HomeIndexPage.prototype.estouChegando = function () {
+    HomeIndexPage.prototype.estouChegando = function (problema) {
         var _this = this;
+        if (problema === void 0) { problema = false; }
         this.geolocation.getCurrentPosition().then(function (resp) {
             _this.storage.get('id').then(function (pai_id) {
-                _this.TbPaiLocalizacao.gravaLocalizacao(pai_id, resp.coords.latitude, resp.coords.longitude).then(function (msg) {
+                _this.TbPaiLocalizacao.gravaLocalizacao(pai_id, resp.coords.latitude, resp.coords.longitude, problema).then(function (msg) {
                     _this.utils.showAlert('Sucesso!', '', msg, ['OK']);
                 }).catch(function (error) {
                     _this.utils.showAlert('Erro!', '', 'Erro ao enviar sua localização. Msg: ' + error, ['OK']);

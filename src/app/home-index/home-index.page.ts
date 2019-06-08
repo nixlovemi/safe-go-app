@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController, ModalController } from '@ionic/angular';
+import { MenuController, ModalController, PopoverController } from '@ionic/angular';
 import { Router, RouterEvent } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { UtilsService } from '../utils.service';
@@ -26,7 +26,8 @@ export class HomeIndexPage implements OnInit {
     public utils: UtilsService,
     private geolocation: Geolocation,
     public TbPaiLocalizacao: TbPaiLocalizacaoService,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public popoverController: PopoverController,
   ) {
     this.storage.get('id').then((pai_id) => {
       if(pai_id == ''){
@@ -87,5 +88,7 @@ export class HomeIndexPage implements OnInit {
     return await modal.present();
   }
 
+  async showLogoff(){
 
+  }
 }

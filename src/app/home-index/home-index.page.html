@@ -1,12 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      <div class="hcs">
-        <p id="userName">{{nomeUser}}</p>
-        <p id="userValidade">Validade: {{validadeUser}}</p>
-        <img class="img-logo-new" src="../../assets/logo-go.jpeg" />
-      </div>
-    </ion-title>
+    <ion-thumbnail class="logo-top" slot="end" (click)="showLogoff($event)">
+      <img class="img-logo-new" src="../../assets/avatar.png">
+    </ion-thumbnail>
+    <ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated user-validade">
+      <h3 id="title">{{nomeUser}}</h3>
+      <p>Validade: {{validadeUser}}</p>
+    </ion-label>
   </ion-toolbar>
 </ion-header>
 
