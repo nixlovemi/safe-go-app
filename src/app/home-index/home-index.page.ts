@@ -88,7 +88,7 @@ export class HomeIndexPage implements OnInit {
     return await modal.present();
   }
 
-  async showLogoff(){
+  async showLogoff(ev){
 
   }
 }

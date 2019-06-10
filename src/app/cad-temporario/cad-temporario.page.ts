@@ -55,4 +55,7 @@ export class CadTemporarioPage implements OnInit {
     });
   }
 
+  clearInput(element){
+    this.frmCadTemp[element] = '';
+  }
 }
