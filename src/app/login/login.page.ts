@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
     this.storage.get('login').then((vLogin) => {
       if(vLogin != ''){
         this.storage.get('senha').then((vSenha) => {
-          this.login(vLogin, vSenha);
+          this.login(false, vLogin, vSenha);
         });
       } else {
         this.TbUsuarioServ.limparDadosLogin();
@@ -46,7 +46,7 @@ export class LoginPage implements OnInit {
     });
   }
 
-  async login(usuario='', senha=''){
+  login(form=true, usuario='', senha=''){
     this.loadingCtr.create({
       message: 'Carregando',
       spinner: 'dots',
@@ -56,7 +56,7 @@ export class LoginPage implements OnInit {
       let vUsuario = '';
       let vSenha   = '';
 
-      if(usuario == '' || senha == ''){
+      if(form){
         vUsuario = this.frmLogin.usuario.trim();
         vSenha   = this.frmLogin.senha.trim();
       } else {
@@ -65,7 +65,9 @@ export class LoginPage implements OnInit {
       }
 
       if(vUsuario == '' || vSenha == ''){
-
+        if(!form){
+          return;
+        }
         res.dismiss();
         this.utils.showAlert('Erro!', '', 'Preencha todas as informações antes de prosseguir.', ['OK']);
 
@@ -100,9 +102,16 @@ export class LoginPage implements OnInit {
 
         }).catch((err) => {
 
-          res.dismiss();
-          this.utils.showAlert('Erro!', '', err, ['OK']);
-
+          if(!form){
+            if(err instanceof ProgressEvent){
+              // sem internet dá esse erro: err instanceof ProgressEvent
+              res.dismiss();
+              this.router.navigate(['/home']);
+            }
+          } else {
+            res.dismiss();
+            this.utils.showAlert('Erro!', '', err, ['OK']);
+          }
         });
       }
 
