@@ -125,6 +125,7 @@ export class TbUsuarioService {
   limparDadosLogin(){
     this.storage.set('id', '');
     this.storage.set('login', '');
+    this.storage.set('senha', '');
     this.storage.set('nome', '');
     this.storage.set('qr-code', '');
     this.storage.set('validade', '');

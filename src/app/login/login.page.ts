@@ -30,18 +30,39 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
-    this.TbUsuarioServ.limparDadosLogin();
+    this.storage.get('login').then((vLogin) => {
+      if(vLogin != ''){
+        this.storage.get('senha').then((vSenha) => {
+          this.login(vLogin, vSenha);
+        });
+      } else {
+        this.TbUsuarioServ.limparDadosLogin();
+      }
+    })
+    .catch((error) => {
+      this.utils.showAlert('Erro!', '', 'Erro ao acessar aplicativo. Msg: ' + error, ['OK']);
+      this.TbUsuarioServ.limparDadosLogin();
+      this.router.navigate(['/']);
+    });
   }
 
-  login(){
+  async login(usuario='', senha=''){
     this.loadingCtr.create({
       message: 'Carregando',
       spinner: 'dots',
     }).then((res) => {
       res.present();
 
-      let vUsuario = this.frmLogin.usuario.trim();
-      let vSenha   = this.frmLogin.senha.trim();
+      let vUsuario = '';
+      let vSenha   = '';
+
+      if(usuario == '' || senha == ''){
+        vUsuario = this.frmLogin.usuario.trim();
+        vSenha   = this.frmLogin.senha.trim();
+      } else {
+        vUsuario = usuario;
+        vSenha   = senha;
+      }
 
       if(vUsuario == '' || vSenha == ''){
 
@@ -49,6 +70,7 @@ export class LoginPage implements OnInit {
         this.utils.showAlert('Erro!', '', 'Preencha todas as informações antes de prosseguir.', ['OK']);
 
       } else {
+
         this.TbUsuarioServ.verificaLogin(vUsuario, vSenha).then((response) => {
 
           res.dismiss();
@@ -66,6 +88,7 @@ export class LoginPage implements OnInit {
 
           this.storage.set('id', vObjPai.pai_id);
           this.storage.set('login', vUsuario);
+          this.storage.set('senha', vSenha);
           this.storage.set('nome', vObjPai.pai_nome);
           this.storage.set('qr-code', vObjPai.pai_qr);
           this.storage.set('validade', vObjPai.pai_validade);
