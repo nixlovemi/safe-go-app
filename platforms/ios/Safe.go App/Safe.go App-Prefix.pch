@@ -17,7 +17,7 @@
  under the License.
  */
 //
-// Prefix header for all source files of the 'Safe.go App' target in the 'Safe.go App' project
+// Prefix header for all source files of the 'Safe.Go App' target in the 'Safe.Go App' project
 //
 
 #ifdef __OBJC__

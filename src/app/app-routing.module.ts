@@ -2,11 +2,18 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', loadChildren: './login/login.module#LoginPageModule' },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'home',
+    loadChildren: './home-index/home-index.module#HomeIndexPageModule'
+  },
   { path: 'homeIndex', loadChildren: './home-index/home-index.module#HomeIndexPageModule' },
   { path: 'cadTemporario', loadChildren: './cad-temporario/cad-temporario.module#CadTemporarioPageModule' },
-  { path: 'homeMenu', loadChildren: './home-menu/home-menu.module#HomeMenuPageModule' },
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' }
 ];
 
 @NgModule({
@@ -15,4 +22,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

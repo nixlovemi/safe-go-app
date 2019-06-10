@@ -3,7 +3,6 @@ import { MenuController, ModalController, PopoverController } from '@ionic/angul
 import { Router, RouterEvent } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { UtilsService } from '../utils.service';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { TbPaiLocalizacaoService } from '../TbPaiLocalizacao/tb-pai-localizacao.service';
 import { CadTemporarioPage } from '../cad-temporario/cad-temporario.page';
 
@@ -24,7 +23,6 @@ export class HomeIndexPage implements OnInit {
     private router: Router,
     private storage: Storage,
     public utils: UtilsService,
-    private geolocation: Geolocation,
     public TbPaiLocalizacao: TbPaiLocalizacaoService,
     public modalController: ModalController,
     public popoverController: PopoverController,
@@ -58,26 +56,7 @@ export class HomeIndexPage implements OnInit {
   }
 
   estouChegando(problema=false){
-    this.geolocation.getCurrentPosition().then((resp) => {
-      this.storage.get('id').then((pai_id) => {
-
-        this.TbPaiLocalizacao.gravaLocalizacao(pai_id, resp.coords.latitude, resp.coords.longitude, problema).then((msg) => {
-          this.utils.showAlert('Sucesso!', '', msg, ['OK']);
-        }).catch((error) => {
-          this.utils.showAlert('Erro!', '', 'Erro ao enviar sua localização. Msg: ' + error, ['OK']);
-        });
-
-      }).catch((error) => {
-
-        this.utils.showAlert('Erro!', '', 'Erro ao buscar usuário logado. Faça o login novamente!', ['OK']);
-        this.router.navigate(['/homeIndex']);
-
-      });
-    }).catch((error) => {
-
-      this.utils.showAlert('Erro!', '', 'Não conseguimos receber sua localização. Msg: ' + error, ['OK']);
-
-    });
+    this.TbPaiLocalizacao.execEstouChegando(problema);
   }
 
   async cadTemporario(){
@@ -88,7 +67,7 @@ export class HomeIndexPage implements OnInit {
     return await modal.present();
   }
 
-  async showLogoff(ev){
-
+  async openMenu(){
+    this.menu.open('menu-principal');
   }
 }

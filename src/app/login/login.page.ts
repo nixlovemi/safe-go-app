@@ -30,14 +30,7 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
-    this.storage.set('id', '');
-    this.storage.set('login', '');
-    this.storage.set('nome', '');
-    this.storage.set('qr-code', '');
-    this.storage.set('validade', '');
-    this.storage.set('id_solicitacao', '');
-    this.storage.set('aprovado', '');
-    this.storage.set('isTemporario', true);
+    this.TbUsuarioServ.limparDadosLogin();
   }
 
   login(){
@@ -80,7 +73,7 @@ export class LoginPage implements OnInit {
           this.storage.set('aprovado', vObjPai.pai_aprovado);
           this.storage.set('isTemporario', vObjPai.pai_id_solicitacao > 0);
 
-          this.router.navigate(['/homeIndex']);
+          this.router.navigate(['/home']);
 
         }).catch((err) => {
 

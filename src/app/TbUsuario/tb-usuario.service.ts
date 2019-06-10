@@ -121,4 +121,15 @@ export class TbUsuarioService {
 
     });
   }
+
+  limparDadosLogin(){
+    this.storage.set('id', '');
+    this.storage.set('login', '');
+    this.storage.set('nome', '');
+    this.storage.set('qr-code', '');
+    this.storage.set('validade', '');
+    this.storage.set('id_solicitacao', '');
+    this.storage.set('aprovado', '');
+    this.storage.set('isTemporario', true);
+  }
 }

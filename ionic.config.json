@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "safe-go-app",
   "integrations": {
     "cordova": {}
   },

@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-thumbnail class="logo-top" slot="end" (click)="showLogoff($event)">
+    <ion-buttons slot="start">
+      <ion-button (click)="openMenu()">
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-thumbnail class="logo-top" slot="end">
       <img class="img-logo-new" src="../../assets/avatar.png">
     </ion-thumbnail>
     <ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated user-validade">
