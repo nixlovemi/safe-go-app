@@ -47,7 +47,12 @@ export class TbUsuarioService {
         }
       },
       (error) => {
-        reject(error.json());
+        /*
+        {"_body":{"isTrusted":true},"status":0,"ok":false,"statusText":"","headers":{},"type":3,"url":null}
+        */
+        
+        //reject(error.json());
+        reject(error);
       });
     });
   }

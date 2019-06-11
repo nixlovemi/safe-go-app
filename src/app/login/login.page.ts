@@ -65,11 +65,12 @@ export class LoginPage implements OnInit {
       }
 
       if(vUsuario == '' || vSenha == ''){
-        if(!form){
-          return;
+
+        if(form){
+          this.utils.showAlert('Erro!', '', 'Preencha todas as informações antes de prosseguir.', ['OK']);
         }
+
         res.dismiss();
-        this.utils.showAlert('Erro!', '', 'Preencha todas as informações antes de prosseguir.', ['OK']);
 
       } else {
 
@@ -103,11 +104,11 @@ export class LoginPage implements OnInit {
         }).catch((err) => {
 
           if(!form){
-            if(err instanceof ProgressEvent){
-              // sem internet dá esse erro: err instanceof ProgressEvent
-              res.dismiss();
+            if(!err.ok){
+              // sem internet
               this.router.navigate(['/home']);
             }
+            res.dismiss();
           } else {
             res.dismiss();
             this.utils.showAlert('Erro!', '', err, ['OK']);
