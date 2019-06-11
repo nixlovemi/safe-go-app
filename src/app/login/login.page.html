@@ -7,20 +7,20 @@
 
     			<div padding>
             <ion-item class="inpt-transp">
-              <ion-input type="email" placeholder="Usuário" name="usuario" type="text" [(ngModel)]="frmLogin.usuario" required></ion-input>
+              <ion-input tabindex="1" type="email" placeholder="Usuário" name="usuario" type="text" [(ngModel)]="frmLogin.usuario" required></ion-input>
             </ion-item>
 
             <ion-item class="inpt-transp">
-              <ion-input placeholder="Senha" name="senha" type="password" [(ngModel)]="frmLogin.senha" required></ion-input>
+              <ion-input tabindex="2" placeholder="Senha" name="senha" type="password" [(ngModel)]="frmLogin.senha" required></ion-input>
             </ion-item>
 
             <div class="esqueci-senha" text-center>
-              <a href="javascript:;" (click)="solicitarResetSenha()">Esqueci minha senha@</a>
+              <a href="javascript:;" (click)="solicitarResetSenha()">Esqueci minha senha</a>
             </div>
     			</div>
 
           <div text-center>
-            <ion-button color="primary" type="submit" size="large">Entrar</ion-button>
+            <ion-button id="btn-entrar" color="primary" type="submit" size="large">Entrar</ion-button>
           </div>
     		</ion-col>
     	</ion-row>

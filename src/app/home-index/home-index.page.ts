@@ -26,7 +26,9 @@ export class HomeIndexPage implements OnInit {
     public TbPaiLocalizacao: TbPaiLocalizacaoService,
     public modalController: ModalController,
     public popoverController: PopoverController,
-  ) {
+  ) { }
+
+  ngOnInit() {
     this.storage.get('id').then((pai_id) => {
       if(pai_id == ''){
         this.router.navigate(['/homeIndex']);
@@ -50,9 +52,6 @@ export class HomeIndexPage implements OnInit {
       this.utils.showAlert('Erro!', '', 'Erro ao acessar aplicativo. Msg: ' + error, ['OK']);
       this.router.navigate(['/homeIndex']);
     });
-  }
-
-  ngOnInit() {
   }
 
   estouChegando(problema=false){

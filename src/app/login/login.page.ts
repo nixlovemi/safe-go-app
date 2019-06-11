@@ -64,12 +64,14 @@ export class LoginPage implements OnInit {
         vSenha   = senha;
       }
 
-      if(vUsuario == '' || vSenha == ''){
+      console.log(vUsuario);
+      console.log(vSenha);
 
+      if(vUsuario == '' || vSenha == ''){
+        
         if(form){
           this.utils.showAlert('Erro!', '', 'Preencha todas as informações antes de prosseguir.', ['OK']);
         }
-
         res.dismiss();
 
       } else {
@@ -102,9 +104,10 @@ export class LoginPage implements OnInit {
           this.router.navigate(['/home']);
 
         }).catch((err) => {
-
           if(!form){
-            if(!err.ok){
+            var erroInternet = (typeof err.ok !== 'undefined') ? !err.ok: false;
+
+            if(erroInternet){
               // sem internet
               this.router.navigate(['/home']);
             }
