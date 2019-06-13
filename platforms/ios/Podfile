@@ -2,7 +2,7 @@
 
 platform :ios, '9.0'
 
-target 'Safe.Go App' do
-	project 'Safe.Go App.xcodeproj'
+target 'SafeGo App' do
+	project 'SafeGo App.xcodeproj'
 
 end

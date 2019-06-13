@@ -24,24 +24,24 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="4">
-      <ion-button (click)="estouChegando(false)" color="primary" fill="solid" expand="block" size="large" class="vertical">
+    <ion-col size="{{colSize}}">
+      <ion-button id="btn-chegando" (click)="estouChegando(false)" color="*" fill="solid" expand="block" size="large" class="vertical">
         <div class="vertical">
           <ion-icon slot="start" name="pin" class="icon"></ion-icon>
           <span class="">Estou<br />chegando</span>
         </div>
       </ion-button>
     </ion-col>
-    <ion-col size="4">
-      <ion-button (click)="estouChegando(true)" color="danger" fill="solid" expand="block" size="large" class="vertical">
+    <ion-col size="{{colSize}}">
+      <ion-button id="btn-problema" (click)="estouChegando(true)" color="*" fill="solid" expand="block" size="large" class="vertical">
         <div class="vertical">
           <ion-icon slot="start" name="alert" class="icon"></ion-icon>
           <span class="">Estou com<br />problema</span>
         </div>
       </ion-button>
     </ion-col>
-    <ion-col size="4">
-      <ion-button *ngIf="!isTemporario" (click)="cadTemporario()" color="primary" fill="solid" expand="block" size="large" class="vertical">
+    <ion-col size="{{colSize}}">
+      <ion-button  id="btn-login-temp" *ngIf="!isTemporario" (click)="cadTemporario()" color="*" fill="solid" expand="block" size="large" class="vertical">
         <div class="vertical">
           <ion-icon slot="start" name="person-add" class="icon"></ion-icon>
           <span class="">Login<br />Temporário</span>

@@ -29,7 +29,9 @@ export class LoginPage implements OnInit {
     moment.locale('pt-BR');
   }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  ionViewWillEnter(){
     this.storage.get('login').then((vLogin) => {
       if(vLogin != ''){
         this.storage.get('senha').then((vSenha) => {
@@ -64,11 +66,8 @@ export class LoginPage implements OnInit {
         vSenha   = senha;
       }
 
-      console.log(vUsuario);
-      console.log(vSenha);
-
       if(vUsuario == '' || vSenha == ''){
-        
+
         if(form){
           this.utils.showAlert('Erro!', '', 'Preencha todas as informações antes de prosseguir.', ['OK']);
         }

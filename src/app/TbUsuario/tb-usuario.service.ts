@@ -50,7 +50,7 @@ export class TbUsuarioService {
         /*
         {"_body":{"isTrusted":true},"status":0,"ok":false,"statusText":"","headers":{},"type":3,"url":null}
         */
-        
+
         //reject(error.json());
         reject(error);
       });
@@ -74,8 +74,7 @@ export class TbUsuarioService {
 
         this.http.post(url, postData)
         .subscribe((result: any) => {
-          console.log(result);
-
+          
           let jsonRet = result.json();
           let msg     = jsonRet.msg;
           let erro    = jsonRet.erro;

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform, ModalController } from '@ionic/angular';
+import { Platform, ModalController, Events } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -8,12 +8,15 @@ import { TbUsuarioService } from './TbUsuario/tb-usuario.service';
 import { Router } from  "@angular/router";
 import { TbPaiLocalizacaoService } from './TbPaiLocalizacao/tb-pai-localizacao.service';
 import { CadTemporarioPage } from './cad-temporario/cad-temporario.page';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+  public isTemporario: boolean = true;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -22,8 +25,15 @@ export class AppComponent {
     private router: Router,
     public TbPaiLocalizacao: TbPaiLocalizacaoService,
     public modalController: ModalController,
+    public storage: Storage,
+    public events: Events,
   ) {
     this.initializeApp();
+    events.subscribe('entrouViewHomeIndex', () => {
+      this.storage.get('isTemporario').then((val) => {
+        this.isTemporario = val;
+      });
+    });
   }
 
   initializeApp() {
