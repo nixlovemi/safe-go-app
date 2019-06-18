@@ -9,30 +9,30 @@
       <ion-content>
         <ion-list>
           <ion-menu-toggle auto-hide="false">
-            <ion-item routerDirection="root">
+            <ion-item routerDirection="root" (click)="menuEstouChegando()" class="item-side-menu">
               <ion-icon slot="start" name="pin"></ion-icon>
-              <ion-label (click)="menuEstouChegando()">
+              <ion-label>
                 Estou chegando
               </ion-label>
             </ion-item>
 
-            <ion-item routerDirection="root">
+            <ion-item routerDirection="root" (click)="menuEstouChegandoProblema()" class="item-side-menu">
               <ion-icon slot="start" name="alert"></ion-icon>
-              <ion-label (click)="menuEstouChegandoProblema()">
+              <ion-label>
                 Estou com problema
               </ion-label>
             </ion-item>
 
-            <ion-item routerDirection="root" *ngIf="!isTemporario">
+            <ion-item routerDirection="root" *ngIf="!isTemporario" (click)="menuCadTemporario()" class="item-side-menu">
               <ion-icon slot="start" name="person-add"></ion-icon>
-              <ion-label (click)="menuCadTemporario()">
+              <ion-label>
                 Login Temporário
               </ion-label>
             </ion-item>
 
-            <ion-item routerDirection="root">
+            <ion-item routerDirection="root" (click)="logoff()" class="item-side-menu">
               <ion-icon slot="start" name="power"></ion-icon>
-              <ion-label (click)="logoff()">
+              <ion-label>
                 Sair
               </ion-label>
             </ion-item>

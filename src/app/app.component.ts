@@ -27,11 +27,14 @@ export class AppComponent {
     public modalController: ModalController,
     public storage: Storage,
     public events: Events,
+    public TbUsuario: TbUsuarioService,
   ) {
     this.initializeApp();
     events.subscribe('entrouViewHomeIndex', () => {
-      this.storage.get('isTemporario').then((val) => {
-        this.isTemporario = val;
+      this.isTemporario = true;
+
+      this.TbUsuario.getDadosLogin().then((vLoginInfo:any) => {
+        this.isTemporario  = vLoginInfo.is_temporario;
       });
     });
   }

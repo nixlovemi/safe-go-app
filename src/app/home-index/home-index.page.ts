@@ -4,6 +4,7 @@ import { Router, RouterEvent } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { UtilsService } from '../utils.service';
 import { TbPaiLocalizacaoService } from '../TbPaiLocalizacao/tb-pai-localizacao.service';
+import { TbUsuarioService } from '../TbUsuario/tb-usuario.service';
 import { CadTemporarioPage } from '../cad-temporario/cad-temporario.page';
 
 @Component({
@@ -28,6 +29,7 @@ export class HomeIndexPage implements OnInit {
     public modalController: ModalController,
     public popoverController: PopoverController,
     public events: Events,
+    public TbUsuario: TbUsuarioService,
   ) { }
 
   ngOnInit() {
@@ -35,34 +37,25 @@ export class HomeIndexPage implements OnInit {
   }
 
   ionViewDidEnter(){
-    this.storage.get('id').then((pai_id) => {
-      if(pai_id == ''){
-        this.router.navigate(['/homeIndex']);
+    this.TbUsuario.getDadosLogin().then((vLoginInfo:any) => {
+      if(vLoginInfo.id != ""){
+        this.nomeUser     = vLoginInfo.nome;
+        this.validadeUser = this.utils.formatDate(vLoginInfo.validade, 'DD/MM/YYYY HH:MI');
+        this.qrCode       = vLoginInfo.qr_code;
+        this.isTemporario = vLoginInfo.is_temporario;
+
+        if(this.isTemporario){
+          this.colSize = 6;
+        } else {
+          this.colSize = 4;
+        }
+
+        this.events.publish('entrouViewHomeIndex');
       } else {
-        this.storage.get('nome').then((pai_nome) => {
-          this.storage.get('validade').then((pai_validade) => {
-            this.storage.get('qr-code').then((pai_qrcode) => {
-              this.storage.get('isTemporario').then((pai_istemporario) => {
-                this.nomeUser     = pai_nome;
-                this.validadeUser = this.utils.formatDate(pai_validade, 'DD/MM/YYYY HH:MI');
-                this.qrCode       = pai_qrcode;
-                this.isTemporario = pai_istemporario;
-
-                console.log( this.isTemporario );
-                if(this.isTemporario){
-                  this.colSize = 6;
-                } else {
-                  this.colSize = 4;
-                }
-
-                this.events.publish('entrouViewHomeIndex');
-              });
-            });
-          });
-        });
+        this.router.navigate(['/homeIndex']);
       }
-    }).catch((error) => {
-      this.utils.showAlert('Erro!', '', 'Erro ao acessar aplicativo. Msg: ' + error, ['OK']);
+    })
+    .catch((err) => {
       this.router.navigate(['/homeIndex']);
     });
   }

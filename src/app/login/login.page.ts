@@ -17,13 +17,12 @@ export class LoginPage implements OnInit {
     usuario: '',
     senha: ''
   };
-  vTeste = '';
 
   constructor(
     public loadingCtr: LoadingController,
     public utils: UtilsService,
     private router: Router,
-    public TbUsuarioServ: TbUsuarioService,
+    public TbUsuario: TbUsuarioService,
     private storage: Storage
   ) {
     moment.locale('pt-BR');
@@ -32,19 +31,19 @@ export class LoginPage implements OnInit {
   ngOnInit() { }
 
   ionViewWillEnter(){
-    this.storage.get('login').then((vLogin) => {
-      if(vLogin != ''){
-        this.storage.get('senha').then((vSenha) => {
-          this.login(false, vLogin, vSenha);
-        });
+    this.TbUsuario.getDadosLogin().then((vLoginInfo:any) => {
+      var vLogin         = vLoginInfo.login;
+      var vSenha         = vLoginInfo.senha;
+
+      if(vLogin != '' && vSenha != ""){
+        this.login(false, vLogin, vSenha);
       } else {
-        this.TbUsuarioServ.limparDadosLogin();
+        this.TbUsuario.limparDadosLogin();
       }
     })
-    .catch((error) => {
-      this.utils.showAlert('Erro!', '', 'Erro ao acessar aplicativo. Msg: ' + error, ['OK']);
-      this.TbUsuarioServ.limparDadosLogin();
-      this.router.navigate(['/']);
+    .catch((err) => {
+      this.TbUsuario.limparDadosLogin();
+      this.router.navigate(['/homeIndex']);
     });
   }
 
@@ -75,7 +74,7 @@ export class LoginPage implements OnInit {
 
       } else {
 
-        this.TbUsuarioServ.verificaLogin(vUsuario, vSenha).then((response) => {
+        this.TbUsuario.verificaLogin(vUsuario, vSenha).then((response) => {
 
           res.dismiss();
 
@@ -90,15 +89,17 @@ export class LoginPage implements OnInit {
             return;
           }
 
-          this.storage.set('id', vObjPai.pai_id);
-          this.storage.set('login', vUsuario);
-          this.storage.set('senha', vSenha);
-          this.storage.set('nome', vObjPai.pai_nome);
-          this.storage.set('qr-code', vObjPai.pai_qr);
-          this.storage.set('validade', vObjPai.pai_validade);
-          this.storage.set('id_solicitacao', vObjPai.pai_id_solicitacao);
-          this.storage.set('aprovado', vObjPai.pai_aprovado);
-          this.storage.set('isTemporario', vObjPai.pai_id_solicitacao > 0);
+          this.TbUsuario.preencheDadosLogin(
+            vObjPai.pai_id,
+            vUsuario,
+            vSenha,
+            vObjPai.pai_nome,
+            vObjPai.pai_qr,
+            vObjPai.pai_validade,
+            vObjPai.pai_id_solicitacao,
+            vObjPai.pai_aprovado,
+            vObjPai.pai_id_solicitacao > 0
+          );
 
           this.router.navigate(['/home']);
 
@@ -108,7 +109,9 @@ export class LoginPage implements OnInit {
 
             if(erroInternet){
               // sem internet
-              this.router.navigate(['/home']);
+              if(vUsuario != '' && vSenha != ''){
+                this.router.navigate(['/home']);
+              }
             }
             res.dismiss();
           } else {
@@ -130,7 +133,7 @@ export class LoginPage implements OnInit {
       res.present();
 
       let vUsuario = this.frmLogin.usuario.trim();
-      this.TbUsuarioServ.solicitaSenha(vUsuario).then((response) => {
+      this.TbUsuario.solicitaSenha(vUsuario).then((response) => {
 
         res.dismiss();
         this.utils.showAlert('Sucesso!', '', response, ['OK']);

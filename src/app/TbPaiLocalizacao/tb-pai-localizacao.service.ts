@@ -5,6 +5,7 @@ import { Http } from '@angular/http';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Storage } from '@ionic/storage';
 import { Router, RouterEvent } from '@angular/router';
+import { TbUsuarioService } from '../TbUsuario/tb-usuario.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class TbPaiLocalizacaoService {
     private geolocation: Geolocation,
     private storage: Storage,
     private router: Router,
+    public TbUsuario: TbUsuarioService,
   ) {
     this.wsPath = this.utils.getWsPath();
     this.appKey = this.appkeyServ.getAppKey();
@@ -57,24 +59,23 @@ export class TbPaiLocalizacaoService {
 
   execEstouChegando(problema){
     this.geolocation.getCurrentPosition().then((resp) => {
-      this.storage.get('id').then((pai_id) => {
-
-        this.gravaLocalizacao(pai_id, resp.coords.latitude, resp.coords.longitude, problema).then((msg) => {
-          this.utils.showAlert('Sucesso!', '', msg, ['OK']);
-        }).catch((error) => {
-          this.utils.showAlert('Erro!', '', 'Erro ao enviar sua localização. Msg: ' + error, ['OK']);
-        });
-
-      }).catch((error) => {
-
-        this.utils.showAlert('Erro!', '', 'Erro ao buscar usuário logado. Faça o login novamente!', ['OK']);
+      this.TbUsuario.getDadosLogin().then((vLoginInfo:any) => {
+        if(vLoginInfo.id != ""){
+          this.gravaLocalizacao(vLoginInfo.id, resp.coords.latitude, resp.coords.longitude, problema).then((msg) => {
+            this.utils.showAlert('Sucesso!', '', msg, ['OK']);
+          }).catch((error) => {
+            this.utils.showAlert('Erro!', '', 'Erro ao enviar sua localização. Msg: ' + error, ['OK']);
+          });
+        } else {
+          this.utils.showAlert('Erro!', '', 'Erro ao buscar usuário logado. Faça o login novamente!', ['OK']);
+          this.router.navigate(['/homeIndex']);
+        }
+      })
+      .catch((err) => {
         this.router.navigate(['/homeIndex']);
-
       });
     }).catch((error) => {
-
       this.utils.showAlert('Erro!', '', 'Não conseguimos receber sua localização. Msg: ' + error, ['OK']);
-
     });
   }
 }

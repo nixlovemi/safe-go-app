@@ -60,40 +60,42 @@ export class TbUsuarioService {
   cadastraLoginTemp(usuario, senha, nome, validade){
     return new Promise(
     (resolve, reject) => {
-      this.storage.get('id').then((pai_id) => {
+      this.getDadosLogin().then((vLoginInfo:any) => {
+        if(vLoginInfo.id != ''){
+          let url      = this.utils.getWsPath() + '/Pai/cadLoginTemporario'
+          let postData = {
+            'appkey'         : this.appKey,
+            'login'          : usuario,
+            'senha'          : senha,
+            'nome'           : nome,
+            'validade'       : validade,
+            'id_solicitacao' : vLoginInfo.id,
+          };
 
-        let url      = this.utils.getWsPath() + '/Pai/cadLoginTemporario'
-        let postData = {
-          'appkey'         : this.appKey,
-          'login'          : usuario,
-          'senha'          : senha,
-          'nome'           : nome,
-          'validade'       : validade,
-          'id_solicitacao' : pai_id,
-        };
+          this.http.post(url, postData)
+          .subscribe((result: any) => {
 
-        this.http.post(url, postData)
-        .subscribe((result: any) => {
-          
-          let jsonRet = result.json();
-          let msg     = jsonRet.msg;
-          let erro    = jsonRet.erro;
+            let jsonRet = result.json();
+            let msg     = jsonRet.msg;
+            let erro    = jsonRet.erro;
 
-          if(erro == true){
-            reject(msg);
-          } else {
-            resolve(msg);
-          }
-        },
-        (error) => {
-          reject(error.json());
-        });
-
-      }).catch((error) => {
-        this.utils.showAlert('Erro!', '', 'Erro ao buscar usuário logado. Faça o login novamente!', ['OK']);
-        this.router.navigate(['/homeIndex']);
+            if(erro == true){
+              reject(msg);
+            } else {
+              resolve(msg);
+            }
+          },
+          (error) => {
+            reject(error.json());
+          });
+        } else {
+          this.utils.showAlert('Erro!', '', 'Erro ao buscar usuário logado. Faça o login novamente!', ['OK']);
+          this.router.navigate(['/homeIndex']);
+        }
+      })
+      .catch((err) => {
+        reject(err);
       });
-
     });
   }
 
@@ -126,15 +128,38 @@ export class TbUsuarioService {
     });
   }
 
+  getDadosLogin(){
+    return new Promise(
+    (resolve, reject) => {
+      this.storage.get('loginInfo').then((strLoginInfo) => {
+        resolve(JSON.parse(strLoginInfo));
+      })
+      .catch((err) => {
+        this.limparDadosLogin();
+        this.storage.get('loginInfo').then((strLoginInfo) => {
+          resolve(JSON.parse(strLoginInfo));
+        });
+      });
+    });
+  }
+
+  preencheDadosLogin(id, login, senha, nome, qr_code, validade, id_solicitacao, aprovado, is_temporario){
+    var LoginInfo = {
+      "id"             : id,
+      "login"          : login,
+      "senha"          : senha,
+      "nome"           : nome,
+      "qr_code"        : qr_code,
+      "validade"       : validade,
+      "id_solicitacao" : id_solicitacao,
+      "aprovado"       : aprovado,
+      "is_temporario"  : is_temporario,
+    };
+
+    this.storage.set('loginInfo', JSON.stringify(LoginInfo));
+  }
+
   limparDadosLogin(){
-    this.storage.set('id', '');
-    this.storage.set('login', '');
-    this.storage.set('senha', '');
-    this.storage.set('nome', '');
-    this.storage.set('qr-code', '');
-    this.storage.set('validade', '');
-    this.storage.set('id_solicitacao', '');
-    this.storage.set('aprovado', '');
-    this.storage.set('isTemporario', true);
+    this.preencheDadosLogin("", "", "", "", "", "", "", "", true);
   }
 }
