@@ -1,7 +1,0 @@
-{
-  "name": "safe-go-app",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
-}
