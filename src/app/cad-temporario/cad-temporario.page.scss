@@ -1,0 +1,40 @@
+ion-header{
+  ion-toolbar{
+    --min-height: 68px;
+  }
+}
+ion-content{
+  --background: #30A1BA;
+}
+.send-button{
+  --background: #F7BD4F;
+  --color: #FFF;
+  text-transform: lowercase;
+  --border-radius: 6px;
+}
+.row-user-info{
+  padding-top: 21px;
+}
+.label-title{
+  color: #FFF;
+  letter-spacing: -2px;
+  font-size: 30px;
+  text-transform: uppercase;
+  font-family: 'Roboto-Thin';
+
+  strong{
+    font-family: 'Roboto' !important;
+  }
+}
+ion-input, ion-datetime{
+  color: #FFF;
+  font-size: 25px;
+}
+ion-datetime{
+  padding-left: 0;
+}
+ion-item{
+  --background: transparent;
+  --background-activated: rgba(0, 0, 0, .3);
+  --background-focused: rgba(0, 0, 0, .3);
+}
