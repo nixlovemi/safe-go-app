@@ -11,9 +11,12 @@ const routes: Routes = [
     path: 'home',
     loadChildren: './home-index/home-index.module#HomeIndexPageModule'
   },
-  { path: 'homeIndex', loadChildren: './home-index/home-index.module#HomeIndexPageModule' },
-  { path: 'cadTemporario', loadChildren: './cad-temporario/cad-temporario.module#CadTemporarioPageModule' },
-  { path: 'login', loadChildren: './login/login.module#LoginPageModule' }
+  {
+    path: 'cadTemporario', loadChildren: './cad-temporario/cad-temporario.module#CadTemporarioPageModule'
+  },
+  {
+    path: 'login', loadChildren: './login/login.module#LoginPageModule'
+  }
 ];
 
 @NgModule({

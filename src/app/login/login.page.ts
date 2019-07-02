@@ -43,7 +43,7 @@ export class LoginPage implements OnInit {
     })
     .catch((err) => {
       this.TbUsuario.limparDadosLogin();
-      this.router.navigate(['/homeIndex']);
+      this.router.navigate(['/login']);
     });
   }
 
@@ -101,6 +101,7 @@ export class LoginPage implements OnInit {
             vObjPai.pai_id_solicitacao > 0
           );
 
+          console.log(1);
           this.router.navigate(['/home']);
 
         }).catch((err) => {
@@ -110,6 +111,7 @@ export class LoginPage implements OnInit {
             if(erroInternet){
               // sem internet
               if(vUsuario != '' && vSenha != ''){
+                console.log(2);
                 this.router.navigate(['/home']);
               }
             }
