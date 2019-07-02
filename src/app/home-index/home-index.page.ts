@@ -18,7 +18,6 @@ export class HomeIndexPage implements OnInit {
   public validadeUser: string = null;
   public logoUrl: string = null;
   public isTemporario: boolean = true;
-  public colSize = 0;
 
   constructor(
     private menu: MenuController,
@@ -43,12 +42,6 @@ export class HomeIndexPage implements OnInit {
         this.validadeUser = this.utils.formatDate(vLoginInfo.validade, 'DD/MM/YYYY HH:MI');
         this.qrCode       = vLoginInfo.qr_code;
         this.isTemporario = vLoginInfo.is_temporario;
-
-        if(this.isTemporario){
-          this.colSize = 6;
-        } else {
-          this.colSize = 4;
-        }
 
         this.events.publish('entrouViewHomeIndex');
       } else {

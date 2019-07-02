@@ -1,9 +1,21 @@
 ion-header{
-  margin-bottom: 30px;
+  ion-toolbar{
+    --min-height: 68px;
+  }
+}
+ion-content{
+  --background: #30A1BA;
+}
+.icon-menu{
+  font-size: 23px;
 }
 #qr-holder {
   width: 100%;
   text-align: center;
+  padding: 45px;
+  background-color: #FFF;
+  border-radius: 10px;
+  border: solid 2px #666;
 }
 #qr-code {
   display: inline-block;
@@ -14,10 +26,6 @@ ion-header{
 #validade-new{
   color: #CCC;
   font-size: 11px;
-}
-.img-logo-new{
-  position: relative;
-  left: -8px;
 }
 .user-validade{
   position: relative;
@@ -42,17 +50,54 @@ div.vertical span{
   font-size: 12px;
 }
 div.vertical .icon{
-  font-size: 22px;
+  font-size: 40px;
 }
 ion-button.vertical{
   height: 100px;
 }
 #btn-chegando{
-  background-color: #5B9CB9;
+  --background: #cefecc;
+  --color: #000;
+  text-transform: lowercase;
+  --border-radius: 6px;
+  --border-width: 2px;
+  --border-color: #666;
+  --border-style: solid;
 }
 #btn-problema{
-  background-color: #615F64;
+  --background: #fed5d3;
+  --color: #000;
+  text-transform: lowercase;
+  --border-radius: 6px;
+  --border-width: 2px;
+  --border-color: #666;
+  --border-style: solid;
 }
-#btn-login-temp{
-  background-color: #771222;
+.img-logo{
+  width: 55px;
+}
+.user-name{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+}
+.user-valid{
+  margin-top: 0px;
+  font-size: 14px;
+  font-weight: 300;
+}
+.row-user-info{
+  padding-top: 21px;
+  background-color: #FFF;
+}
+.row-qr{
+  padding: 40px 0 30px;
+  background: #30A1BA url('../../assets/bg-principal.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
 }

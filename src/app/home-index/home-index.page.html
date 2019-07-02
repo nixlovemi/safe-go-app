@@ -1,52 +1,52 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="openMenu()">
-        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      <ion-button class="icon-menu" (click)="openMenu()">
+        <ion-icon src="../../assets/menu-icon.svg" name="menu"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-thumbnail class="logo-top" slot="end">
-      <img class="img-logo-new" src="../../assets/avatar.png">
-    </ion-thumbnail>
-    <ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated user-validade">
-      <h3 id="title">{{nomeUser}}</h3>
-      <p>Validade: {{validadeUser}}</p>
-    </ion-label>
+    <img class="img-logo-new" src="../../assets/safe_go_logo_final-azul.png">
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-row style="margin-bottom: 30px;">
-    <ion-col size="12">
+  <ion-row class="row-user-info">
+    <ion-col size="12" text-center>
+      <img class="img-logo" src="../../assets/person-icon.png" />
+      <h2 class="user-name">{{nomeUser}}</h2>
+      <p class="user-valid">Validade: {{validadeUser}}</p>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="row-qr">
+    <ion-col size="1"></ion-col>
+    <ion-col size="10" class="col-qr-code">
       <div id="qr-holder">
         <qrcode id="qr-code" [qrdata]="qrCode" [size]="300" [level]="'M'"></qrcode>
       </div>
     </ion-col>
+    <ion-col size="1"></ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="{{colSize}}">
-      <ion-button id="btn-chegando" (click)="estouChegando(false)" color="*" fill="solid" expand="block" size="large" class="vertical">
+    <ion-col size="1"></ion-col>
+    <ion-col size="5">
+      <ion-button id="btn-chegando" (click)="estouChegando(false)" expand="block" size="large" class="vertical">
         <div class="vertical">
-          <ion-icon slot="start" name="pin" class="icon"></ion-icon>
+          <!--<ion-icon slot="start" name="pin" class="icon"></ion-icon>-->
+          <ion-icon src="../../assets/plane.svg" slot="start" name="pin" class="icon"></ion-icon>
           <span class="">Estou<br />chegando</span>
         </div>
       </ion-button>
     </ion-col>
-    <ion-col size="{{colSize}}">
-      <ion-button id="btn-problema" (click)="estouChegando(true)" color="*" fill="solid" expand="block" size="large" class="vertical">
+    <ion-col size="5">
+      <ion-button id="btn-problema" (click)="estouChegando(true)" expand="block" size="large" class="vertical">
         <div class="vertical">
-          <ion-icon slot="start" name="alert" class="icon"></ion-icon>
+          <!--<ion-icon slot="start" name="alert" class="icon"></ion-icon>-->
+          <ion-icon src="../../assets/megaphone.svg" slot="start" name="pin" class="icon"></ion-icon>
           <span class="">Estou com<br />problema</span>
         </div>
       </ion-button>
     </ion-col>
-    <ion-col size="{{colSize}}">
-      <ion-button  id="btn-login-temp" *ngIf="!isTemporario" (click)="cadTemporario()" color="*" fill="solid" expand="block" size="large" class="vertical">
-        <div class="vertical">
-          <ion-icon slot="start" name="person-add" class="icon"></ion-icon>
-          <span class="">Login<br />Temporário</span>
-        </div>
-      </ion-button>
-    </ion-col>
+    <ion-col size="1"></ion-col>
   </ion-row>
 </ion-content>
