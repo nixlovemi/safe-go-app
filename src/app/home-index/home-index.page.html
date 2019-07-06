@@ -9,16 +9,18 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="row-qr">
   <ion-row class="row-user-info">
-    <ion-col size="12" text-center>
+    <ion-col size="2" text-center>
       <img class="img-logo" src="../../assets/person-icon.png" />
+    </ion-col>
+    <ion-col size="10">
       <h2 class="user-name">{{nomeUser}}</h2>
-      <p class="user-valid">Validade: {{validadeUser}}</p>
+      <p class="user-valid">Validade/Expiry Date: {{validadeUser}}</p>
     </ion-col>
   </ion-row>
 
-  <ion-row class="row-qr">
+  <ion-row>
     <ion-col size="1"></ion-col>
     <ion-col size="10" class="col-qr-code">
       <div id="qr-holder">
@@ -34,7 +36,10 @@
         <div class="vertical">
           <!--<ion-icon slot="start" name="pin" class="icon"></ion-icon>-->
           <ion-icon src="../../assets/plane.svg" slot="start" name="pin" class="icon"></ion-icon>
-          <span class="">Estou<br />chegando</span>
+          <span class="">
+            Estou chegando<br />
+            <span style="color: #666;">I'm coming</span>
+          </span>
         </div>
       </ion-button>
     </ion-col>
@@ -43,7 +48,11 @@
         <div class="vertical">
           <!--<ion-icon slot="start" name="alert" class="icon"></ion-icon>-->
           <ion-icon src="../../assets/megaphone.svg" slot="start" name="pin" class="icon"></ion-icon>
-          <span class="">Estou com<br />problema</span>
+          <span class="">
+            Estou com<br />problema
+            <br />
+            <span style="color: #666;">I have a problem</span>
+          </span>
         </div>
       </ion-button>
     </ion-col>

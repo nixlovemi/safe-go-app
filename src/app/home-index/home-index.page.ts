@@ -39,7 +39,7 @@ export class HomeIndexPage implements OnInit {
     this.TbUsuario.getDadosLogin().then((vLoginInfo:any) => {
       if(vLoginInfo.id != ""){
         this.nomeUser     = vLoginInfo.nome;
-        this.validadeUser = this.utils.formatDate(vLoginInfo.validade, 'DD/MM/YYYY HH:MI');
+        this.validadeUser = this.utils.formatDate(vLoginInfo.validade, 'DD/MM/YYYY');
         this.qrCode       = vLoginInfo.qr_code;
         this.isTemporario = vLoginInfo.is_temporario;
 

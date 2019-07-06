@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="br.com.pessoaweb.safegoapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>safe.go App</name>
+    <name>Safe.Go</name>
     <description>Controle escolar de saída de alunos</description>
     <author email="contato@pessoaweb.com.br" href="http://pessoaweb.com.br/">Pessoa Web</author>
     <content src="index.html" />
@@ -46,6 +46,9 @@
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
     <platform name="ios">
+        <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
+            <string>Preciso da sua localização para notificar a escola quando informar que está atrasado. / I need your location to notify the school when I report that you are late.</string>
+        </edit-config>
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <icon height="57" src="resources/ios/icon/icon.png" width="57" />
@@ -91,4 +94,5 @@
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.3" />
     <plugin name="cordova-plugin-geolocation" spec="~4.0.1" />
     <engine name="android" spec="8.0.0" />
+    <engine name="ios" spec="^4.5.5" />
 </widget>

@@ -5,6 +5,18 @@
   },
   "config_munge": {
     "files": {
+      "*-Info.plist": {
+        "parents": {
+          "NSLocationWhenInUseUsageDescription": [
+            {
+              "xml": "<string>Preciso da sua localização para notificar a escola quando informar que está atrasado. / I need your location to notify the school when I report that you are late.</string>",
+              "count": 1,
+              "mode": "merge",
+              "id": "config.xml"
+            }
+          ]
+        }
+      },
       "config.xml": {
         "parents": {
           "/*": [
@@ -71,34 +83,34 @@
   },
   "installed_plugins": {
     "cordova-plugin-file": {
-      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+      "PACKAGE_NAME": "br.com.pessoaweb.safegoapp"
     },
     "cordova-plugin-advanced-http": {
-      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+      "PACKAGE_NAME": "br.com.pessoaweb.safegoapp"
     },
     "cordova-plugin-device": {
-      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+      "PACKAGE_NAME": "br.com.pessoaweb.safegoapp"
     },
     "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+      "PACKAGE_NAME": "br.com.pessoaweb.safegoapp"
     },
     "cordova-plugin-ionic-keyboard": {
-      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+      "PACKAGE_NAME": "br.com.pessoaweb.safegoapp"
     },
     "cordova-plugin-ionic-webview": {
-      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+      "PACKAGE_NAME": "br.com.pessoaweb.safegoapp"
     },
     "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+      "PACKAGE_NAME": "br.com.pessoaweb.safegoapp"
     },
     "cordova-plugin-statusbar": {
-      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+      "PACKAGE_NAME": "br.com.pessoaweb.safegoapp"
     },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+      "PACKAGE_NAME": "br.com.pessoaweb.safegoapp"
     },
     "cordova-sqlite-storage": {
-      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+      "PACKAGE_NAME": "br.com.pessoaweb.safegoapp"
     }
   },
   "dependent_plugins": {},

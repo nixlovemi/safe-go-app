@@ -89,7 +89,7 @@ export class TbUsuarioService {
             reject(error.json());
           });
         } else {
-          this.utils.showAlert('Erro!', '', 'Erro ao buscar usuário logado. Faça o login novamente!', ['OK']);
+          this.utils.showAlert('Erro! / Error!', '', 'Erro ao buscar usuário logado. Faça o login novamente! / Error searching logged in user. Please login again!', ['OK']);
           this.router.navigate(['/homeIndex']);
         }
       })

@@ -42,15 +42,15 @@ export class CadTemporarioPage implements OnInit {
       this.frmCadTemp.usuario,
       this.frmCadTemp.senha,
       this.frmCadTemp.nome,
-      this.utils.formatDate(this.frmCadTemp.validade, 'YYYY-MM-DD HH:MI')
+      this.utils.formatDate(this.frmCadTemp.validade, 'YYYY-MM-DD') + ' 23:59:59'
     ).then((msg) => {
 
-      this.utils.showAlert('Sucesso!', '', msg, ['OK']);
+      this.utils.showAlert('Sucesso! / Success!', '', msg, ['OK']);
       this.closeModal();
 
     }).catch((error) => {
 
-      this.utils.showAlert('Erro!', '', 'Erro ao cadastrar login temporário. Msg: ' + error, ['OK']);
+      this.utils.showAlert('Erro! / Error!', '', 'Erro ao cadastrar login temporário. / Error when registering temporary login.', ['OK']);
 
     });
   }

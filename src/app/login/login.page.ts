@@ -49,7 +49,7 @@ export class LoginPage implements OnInit {
 
   login(form=true, usuario='', senha=''){
     this.loadingCtr.create({
-      message: 'Carregando',
+      message: 'Carregando / Loading',
       spinner: 'dots',
     }).then((res) => {
       res.present();
@@ -68,7 +68,7 @@ export class LoginPage implements OnInit {
       if(vUsuario == '' || vSenha == ''){
 
         if(form){
-          this.utils.showAlert('Erro!', '', 'Preencha todas as informações antes de prosseguir.', ['OK']);
+          this.utils.showAlert('Erro! / Error!', '', 'Preencha todas as informações antes de prosseguir. / Fill in all the information before proceeding.', ['OK']);
         }
         res.dismiss();
 
@@ -85,7 +85,7 @@ export class LoginPage implements OnInit {
           let vDifValidade = vValidade.diff(vHoje, 'minutes');
           if(vDifValidade < 0){
             res.dismiss();
-            this.utils.showAlert('Alerta!', '', 'Seu login era válido até ' + vValidade.format('DD/MM/YYYY HH:mm') + '. Entre em contato com a escola.', ['OK']);
+            this.utils.showAlert('Alerta! / Alert!', '', 'Seu login era válido até ' + vValidade.format('DD/MM/YYYY HH:mm') + '. Entre em contato com a escola. / Your login was valid until ' + vValidade.format('DD/MM/YYYY HH:mm') + '. Please contact the school.', ['OK']);
             return;
           }
 
@@ -101,7 +101,6 @@ export class LoginPage implements OnInit {
             vObjPai.pai_id_solicitacao > 0
           );
 
-          console.log(1);
           this.router.navigate(['/home']);
 
         }).catch((err) => {
@@ -118,7 +117,7 @@ export class LoginPage implements OnInit {
             res.dismiss();
           } else {
             res.dismiss();
-            this.utils.showAlert('Erro!', '', err, ['OK']);
+            this.utils.showAlert('Erro! / Error!', '', err, ['OK']);
           }
         });
       }
@@ -129,7 +128,7 @@ export class LoginPage implements OnInit {
 
   solicitarResetSenha(){
     this.loadingCtr.create({
-      message: 'Carregando',
+      message: 'Carregando / Loading',
       spinner: 'dots',
     }).then((res) => {
       res.present();
@@ -138,12 +137,12 @@ export class LoginPage implements OnInit {
       this.TbUsuario.solicitaSenha(vUsuario).then((response) => {
 
         res.dismiss();
-        this.utils.showAlert('Sucesso!', '', response, ['OK']);
+        this.utils.showAlert('Sucesso! / Success!', '', response, ['OK']);
 
       }).catch((err) => {
 
         res.dismiss();
-        this.utils.showAlert('Erro!', '', err, ['OK']);
+        this.utils.showAlert('Erro! / Error!', '', err, ['OK']);
 
       });
 

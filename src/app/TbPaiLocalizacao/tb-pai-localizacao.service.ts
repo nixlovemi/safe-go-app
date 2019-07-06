@@ -62,12 +62,12 @@ export class TbPaiLocalizacaoService {
       this.TbUsuario.getDadosLogin().then((vLoginInfo:any) => {
         if(vLoginInfo.id != ""){
           this.gravaLocalizacao(vLoginInfo.id, resp.coords.latitude, resp.coords.longitude, problema).then((msg) => {
-            this.utils.showAlert('Sucesso!', '', msg, ['OK']);
+            this.utils.showAlert('Sucesso! / Success!', '', msg, ['OK']);
           }).catch((error) => {
-            this.utils.showAlert('Erro!', '', 'Erro ao enviar sua localização. Msg: ' + error, ['OK']);
+            this.utils.showAlert('Erro! / Error!', '', 'Erro ao enviar sua localização. / Error sending your location.', ['OK']);
           });
         } else {
-          this.utils.showAlert('Erro!', '', 'Erro ao buscar usuário logado. Faça o login novamente!', ['OK']);
+          this.utils.showAlert('Erro! / Error!', '', 'Erro ao buscar usuário logado. Faça o login novamente! / Error searching logged in user. Please login again!', ['OK']);
           this.router.navigate(['/homeIndex']);
         }
       })
@@ -75,7 +75,7 @@ export class TbPaiLocalizacaoService {
         this.router.navigate(['/homeIndex']);
       });
     }).catch((error) => {
-      this.utils.showAlert('Erro!', '', 'Não conseguimos receber sua localização. Msg: ' + error, ['OK']);
+      this.utils.showAlert('Erro! / Error!', '', 'Não conseguimos receber sua localização. / We could not receive your location.', ['OK']);
     });
   }
 }
