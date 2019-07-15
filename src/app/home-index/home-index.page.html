@@ -16,7 +16,7 @@
     </ion-col>
     <ion-col size="10">
       <h2 class="user-name">{{nomeUser}}</h2>
-      <p class="user-valid">Validade/Expiry Date: {{validadeUser}}</p>
+      <p class="user-valid">Validade/Expiration: {{validadeUser}}</p>
     </ion-col>
   </ion-row>
 
@@ -24,7 +24,7 @@
     <ion-col size="1"></ion-col>
     <ion-col size="10" class="col-qr-code">
       <div id="qr-holder">
-        <qrcode id="qr-code" [qrdata]="qrCode" [size]="300" [level]="'M'"></qrcode>
+        <qrcode [usesvg]="true" id="qr-code" [qrdata]="qrCode" [size]="300" [level]="'M'"></qrcode>
       </div>
     </ion-col>
     <ion-col size="1"></ion-col>
@@ -38,7 +38,7 @@
           <ion-icon src="../../assets/plane.svg" slot="start" name="pin" class="icon"></ion-icon>
           <span class="">
             Estou chegando<br />
-            <span style="color: #666;">I'm coming</span>
+            <span style="color: #666;">On my way</span>
           </span>
         </div>
       </ion-button>
@@ -51,7 +51,7 @@
           <span class="">
             Estou com<br />problema
             <br />
-            <span style="color: #666;">I have a problem</span>
+            <span style="color: #666;">In trouble</span>
           </span>
         </div>
       </ion-button>

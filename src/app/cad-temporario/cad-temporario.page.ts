@@ -50,7 +50,7 @@ export class CadTemporarioPage implements OnInit {
 
     }).catch((error) => {
 
-      this.utils.showAlert('Erro! / Error!', '', 'Erro ao cadastrar login temporário. / Error when registering temporary login.', ['OK']);
+      this.utils.showAlert('Erro! / Error!', '', 'Erro ao cadastrar login temporário. / Error when registering temporary authorization.', ['OK']);
 
     });
   }
