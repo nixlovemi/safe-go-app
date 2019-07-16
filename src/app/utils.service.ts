@@ -10,7 +10,7 @@ export class UtilsService {
   constructor(
     public alertCtr: AlertController,
   ) {
-    this.webServicePath = 'http://pessoaweb.com.br/safeGoWs';
+    this.webServicePath = 'http://safego.com.br/safeGoWs';
   }
 
   getWsPath(){
