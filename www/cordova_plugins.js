@@ -151,8 +151,8 @@ module.exports = [
     "runs": true
   },
   {
-    "id": "cordova-plugin-file.androidFileSystem",
-    "file": "plugins/cordova-plugin-file/www/android/FileSystem.js",
+    "id": "cordova-plugin-file.iosFileSystem",
+    "file": "plugins/cordova-plugin-file/www/ios/FileSystem.js",
     "pluginId": "cordova-plugin-file",
     "merges": [
       "FileSystem"
@@ -240,22 +240,40 @@ module.exports = [
     ]
   },
   {
-    "id": "cordova-plugin-geolocation.geolocation",
-    "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
+    "id": "cordova-plugin-geolocation.Coordinates",
+    "file": "plugins/cordova-plugin-geolocation/www/Coordinates.js",
     "pluginId": "cordova-plugin-geolocation",
     "clobbers": [
-      "navigator.geolocation"
+      "Coordinates"
     ]
   },
   {
     "id": "cordova-plugin-geolocation.PositionError",
     "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
     "pluginId": "cordova-plugin-geolocation",
-    "runs": true
+    "clobbers": [
+      "PositionError"
+    ]
+  },
+  {
+    "id": "cordova-plugin-geolocation.Position",
+    "file": "plugins/cordova-plugin-geolocation/www/Position.js",
+    "pluginId": "cordova-plugin-geolocation",
+    "clobbers": [
+      "Position"
+    ]
+  },
+  {
+    "id": "cordova-plugin-geolocation.geolocation",
+    "file": "plugins/cordova-plugin-geolocation/www/geolocation.js",
+    "pluginId": "cordova-plugin-geolocation",
+    "clobbers": [
+      "navigator.geolocation"
+    ]
   },
   {
     "id": "cordova-plugin-ionic-keyboard.keyboard",
-    "file": "plugins/cordova-plugin-ionic-keyboard/www/android/keyboard.js",
+    "file": "plugins/cordova-plugin-ionic-keyboard/www/ios/keyboard.js",
     "pluginId": "cordova-plugin-ionic-keyboard",
     "clobbers": [
       "window.Keyboard"
@@ -267,6 +285,14 @@ module.exports = [
     "pluginId": "cordova-plugin-ionic-webview",
     "clobbers": [
       "Ionic.WebView"
+    ]
+  },
+  {
+    "id": "cordova-plugin-ionic-webview.ios-wkwebview-exec",
+    "file": "plugins/cordova-plugin-ionic-webview/src/www/ios/ios-wkwebview-exec.js",
+    "pluginId": "cordova-plugin-ionic-webview",
+    "clobbers": [
+      "cordova.exec"
     ]
   },
   {

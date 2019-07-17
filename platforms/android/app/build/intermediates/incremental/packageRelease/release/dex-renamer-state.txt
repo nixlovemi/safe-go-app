@@ -1,4 +1,0 @@
-#Sat Jul 06 14:10:25 BRT 2019
-base.0=/Users/leandronix/NetBeansProjects/safe-go-app/safe-go-app/platforms/android/app/build/intermediates/transforms/dex/release/0
-path.0=classes.dex
-renamed.0=classes.dex
